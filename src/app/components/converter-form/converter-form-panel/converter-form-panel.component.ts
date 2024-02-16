@@ -12,7 +12,9 @@ import { CurrenciesService } from '../../../services/currencies.service';
         <label [for]="idPrefix + 'Currency'">Amount</label>
         <select [name]="idPrefix + 'Currency'" [id]="idPrefix + 'Currency'">
           @for (code of codeArray; track code) {
-          <option [value]="code">{{ code }}</option>
+          <option [value]="code" [selected]="selectedCode === code">
+            {{ code }}
+          </option>
           }
         </select>
       </div>
@@ -34,6 +36,7 @@ import { CurrenciesService } from '../../../services/currencies.service';
 export class ConverterFormPanelComponent implements OnInit {
   @Input() headerText = 'Amount';
   @Input() idPrefix = '';
+  @Input() selectedCode = '';
   codeArray: string[] = [];
 
   constructor(private currenciesService: CurrenciesService) {}

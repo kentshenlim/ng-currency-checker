@@ -8,10 +8,15 @@ import { ConverterFormPanelComponent } from './converter-form-panel/converter-fo
   imports: [ConverterFormPanelComponent],
   template: `
     <div>
-      <app-converter-form-panel headerText="Amount" idPrefix="base" />
+      <app-converter-form-panel
+        headerText="Amount"
+        idPrefix="base"
+        selectedCode="JPY"
+      />
       <app-converter-form-panel
         headerText="Converted Amount"
         idPrefix="target"
+        selectedCode="GBP"
       />
     </div>
   `,
