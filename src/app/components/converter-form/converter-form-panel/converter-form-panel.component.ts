@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CurrenciesService } from '../../../services/currencies.service';
 
 @Component({
   selector: 'app-converter-form-panel',
@@ -9,11 +10,11 @@ import { Component, Input } from '@angular/core';
       <h3>{{ headerText }}</h3>
       <div>
         <label [for]="idPrefix + 'Currency'">Amount</label>
-        <input
-          type="text"
-          [id]="idPrefix + 'Currency'"
-          [name]="idPrefix + 'Currency'"
-        />
+        <select [name]="idPrefix + 'Currency'" [id]="idPrefix + 'Currency'">
+          @for (code of codeArray; track code) {
+          <option [value]="code">{{ code }}</option>
+          }
+        </select>
       </div>
       <div>
         <input
@@ -30,7 +31,14 @@ import { Component, Input } from '@angular/core';
     }
   `,
 })
-export class ConverterFormPanelComponent {
+export class ConverterFormPanelComponent implements OnInit {
   @Input() headerText = 'Amount';
   @Input() idPrefix = '';
+  codeArray: string[] = [];
+
+  constructor(private currenciesService: CurrenciesService) {}
+
+  ngOnInit(): void {
+    this.codeArray = this.currenciesService.getCodeList();
+  }
 }
