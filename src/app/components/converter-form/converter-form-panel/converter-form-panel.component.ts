@@ -38,6 +38,7 @@ import { CurrenciesService } from '../../../services/currencies.service';
           [name]="idPrefix + 'Amount'"
           [value]="selectedAmount"
           (keyup)="onChangeAmount()"
+          [disabled]="!isAmountMutable"
           #amountSelected
         />
       </div>
@@ -50,10 +51,12 @@ import { CurrenciesService } from '../../../services/currencies.service';
   `,
 })
 export class ConverterFormPanelComponent implements OnInit {
+  // The binding part could have been done with reactive form but okay
   @Input() headerText = 'Amount';
   @Input() idPrefix = '';
   @Input() selectedCode = '';
   @Input() selectedAmount = 0;
+  @Input() isAmountMutable = true;
   codeArray: string[] = [];
   @Output() currencyChanged = new EventEmitter<string>();
   @Output() amountChanged = new EventEmitter<number>();
@@ -73,6 +76,7 @@ export class ConverterFormPanelComponent implements OnInit {
   }
 
   onChangeAmount() {
+    if (!this.isAmountMutable) return;
     this.amountChanged.emit(
       +(this.amountSelected.nativeElement as HTMLInputElement).value
     );

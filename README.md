@@ -16,3 +16,5 @@ Three key features: convertor, history, financial news.
 - Detect location
 - Financial news
 - Throttle onChange
+- Must handle when amount and when currency changed
+- Swapping top and bottom

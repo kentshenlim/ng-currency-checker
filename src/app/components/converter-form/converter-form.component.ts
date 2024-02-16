@@ -21,8 +21,8 @@ import { ConverterFormPanelComponent } from './converter-form-panel/converter-fo
         idPrefix="target"
         [selectedCode]="getTargetCurrency()"
         [selectedAmount]="getTargetAmount()"
+        [isAmountMutable]="false"
         (currencyChanged)="onTargetCurrencyChanged($event)"
-        (amountChanged)="onTargetAmountChanged($event)"
       />
     </div>
   `,
@@ -49,9 +49,8 @@ export class ConverterFormComponent {
     console.log(this.baseAmount, this.targetAmount);
   }
 
-  public onTargetAmountChanged(newAmount: number) {
-    this.targetAmount = newAmount;
-    console.log(this.baseAmount, this.targetAmount);
+  private updateTargetAmount() {
+    // Don't allow user to change target amount manually
   }
 
   public getBaseCurrency() {
