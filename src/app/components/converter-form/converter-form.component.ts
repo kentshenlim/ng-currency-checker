@@ -1,30 +1,18 @@
 import { Component } from '@angular/core';
 import { ConverterService } from '../../services/converter.service';
+import { ConverterFormPanelComponent } from './converter-form-panel/converter-form-panel.component';
 
 @Component({
   selector: 'app-converter-form',
   standalone: true,
-  imports: [],
+  imports: [ConverterFormPanelComponent],
   template: `
     <div>
-      <form>
-        <div>
-          <div>
-            <label for="base-currency">Amount</label>
-            <input type="text" id="base-currency" name="baseCurrency" />
-            <input
-              type="number"
-              id="base-currency-amount"
-              name="baseCurrencyAmount"
-            />
-          </div>
-          <div>
-            <label for="currency">Converted Amount</label>
-            <input type="text" id="currency" name="currency" />
-            <input type="number" id="currency-amount" name="currencyAmount" />
-          </div>
-        </div>
-      </form>
+      <app-converter-form-panel headerText="Amount" idPrefix="base" />
+      <app-converter-form-panel
+        headerText="Converted Amount"
+        idPrefix="target"
+      />
     </div>
   `,
   styles: ``,
