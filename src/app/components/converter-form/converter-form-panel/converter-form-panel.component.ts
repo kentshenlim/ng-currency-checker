@@ -36,6 +36,9 @@ import { CurrenciesService } from '../../../services/currencies.service';
           type="number"
           [id]="idPrefix + 'Amount'"
           [name]="idPrefix + 'Amount'"
+          [value]="selectedAmount"
+          (keyup)="onChangeAmount()"
+          #amountSelected
         />
       </div>
     </form>
@@ -50,9 +53,12 @@ export class ConverterFormPanelComponent implements OnInit {
   @Input() headerText = 'Amount';
   @Input() idPrefix = '';
   @Input() selectedCode = '';
+  @Input() selectedAmount = 0;
   codeArray: string[] = [];
   @Output() currencyChanged = new EventEmitter<string>();
+  @Output() amountChanged = new EventEmitter<number>();
   @ViewChild('currencySelected') currencySelected!: ElementRef;
+  @ViewChild('amountSelected') amountSelected!: ElementRef;
 
   constructor(private currenciesService: CurrenciesService) {}
 
@@ -63,6 +69,12 @@ export class ConverterFormPanelComponent implements OnInit {
   onChangeCurrency() {
     this.currencyChanged.emit(
       (this.currencySelected.nativeElement as HTMLSelectElement).value
+    );
+  }
+
+  onChangeAmount() {
+    this.amountChanged.emit(
+      +(this.amountSelected.nativeElement as HTMLInputElement).value
     );
   }
 }

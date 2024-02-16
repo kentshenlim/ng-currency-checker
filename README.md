@@ -15,3 +15,4 @@ Three key features: convertor, history, financial news.
 - Last view history
 - Detect location
 - Financial news
+- Throttle onChange
