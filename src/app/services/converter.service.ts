@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,8 @@ export class ConverterService {
     httpParams = httpParams.append('apikey', this.apiKey);
     httpParams = httpParams.append('base_currency', baseCurrency);
     httpParams = httpParams.append('currencies', currency);
-    return this.httpClient.get(baseUrl, { params: httpParams });
+    return this.httpClient.get<{ data: { [p: string]: number } }>(baseUrl, {
+      params: httpParams,
+    });
   }
 }

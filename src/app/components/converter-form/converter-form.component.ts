@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConverterService } from '../../services/converter.service';
 import { ConverterFormPanelComponent } from './converter-form-panel/converter-form-panel.component';
 
@@ -28,13 +28,19 @@ import { ConverterFormPanelComponent } from './converter-form-panel/converter-fo
   `,
   styles: ``,
 })
-export class ConverterFormComponent {
+export class ConverterFormComponent implements OnInit {
   private baseCurrency = 'MYR';
   private targetCurrency = 'GBP';
   private baseAmount = 1;
   private targetAmount = 100;
 
   constructor(private converterService: ConverterService) {}
+
+  ngOnInit(): void {
+    this.converterService
+      .getConversionRate('MYR', 'GBP')
+      .subscribe((res) => console.log(res.data));
+  }
 
   public onBaseCurrencyChanged(newCurrency: string) {
     this.baseCurrency = newCurrency;
@@ -46,11 +52,18 @@ export class ConverterFormComponent {
 
   public onBaseAmountChanged(newAmount: number) {
     this.baseAmount = newAmount;
-    console.log(this.baseAmount, this.targetAmount);
+    this.updateTargetAmount();
   }
 
   private updateTargetAmount() {
     // Don't allow user to change target amount manually
+    this.converterService
+      .getConversionRate(this.baseCurrency, this.targetCurrency)
+      .subscribe((obj) => {
+        const rate = obj.data[this.targetCurrency];
+        const targetAmountNew = rate * this.baseAmount;
+        this.targetAmount = targetAmountNew;
+      });
   }
 
   public getBaseCurrency() {
