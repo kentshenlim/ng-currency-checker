@@ -62,7 +62,7 @@ export class ConverterFormComponent implements OnInit {
       .subscribe((obj) => {
         const rate = obj.data[this.targetCurrency];
         const targetAmountNew = rate * this.baseAmount;
-        this.targetAmount = targetAmountNew;
+        this.targetAmount = +targetAmountNew;
       });
   }
 
