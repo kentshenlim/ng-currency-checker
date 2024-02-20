@@ -19,7 +19,14 @@ import { DecimalPipe } from '@angular/common';
         (currencyChanged)="onBaseCurrencyChanged($event)"
         (amountChanged)="onBaseAmountChanged($event)"
       />
-      <button (click)="onClickSwap()" class="my-5">Swap</button>
+      <div class="w-full mx-auto relative my-6 BORDER-MAIN">
+        <button
+          (click)="onClickSwap()"
+          class="bg-green-300 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          Swap
+        </button>
+      </div>
       <app-converter-form-panel
         headerText="Converted Amount"
         idPrefix="target"

@@ -16,4 +16,7 @@
   .BG-APP {
     @apply bg-sky-50;
   }
+  .BORDER-MAIN {
+    @apply border border-sky-100;
+  }
 }
