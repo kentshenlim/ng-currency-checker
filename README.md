@@ -18,3 +18,5 @@ Three key features: convertor, history, financial news.
 - Financial news
 - Swapping top and bottom
 - Error page
+- Need to extract out color for the main app panel because used across different
+  comp

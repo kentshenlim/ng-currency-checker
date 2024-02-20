@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .BG-MAIN {
+    @apply bg-sky-100;
+  }
+  .BG-APP {
+    @apply bg-sky-50;
+  }
+}

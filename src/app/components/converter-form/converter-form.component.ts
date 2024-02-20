@@ -8,7 +8,7 @@ import debounce from '../../utils/debounce';
   standalone: true,
   imports: [ConverterFormPanelComponent],
   template: `
-    <div class="border-2 border-red-300 rounded-lg px-2 py-2">
+    <div class="bg-gray-50 rounded-lg px-3 py-2 BG-APP">
       <app-converter-form-panel
         headerText="Amount"
         idPrefix="base"
@@ -17,6 +17,7 @@ import debounce from '../../utils/debounce';
         (currencyChanged)="onBaseCurrencyChanged($event)"
         (amountChanged)="onBaseAmountChanged($event)"
       />
+      <button class="my-5">Swap</button>
       <app-converter-form-panel
         headerText="Converted Amount"
         idPrefix="target"
