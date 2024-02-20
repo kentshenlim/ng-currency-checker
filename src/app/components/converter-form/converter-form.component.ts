@@ -34,7 +34,7 @@ export class ConverterFormComponent implements OnInit {
   private baseCurrency = 'MYR';
   private targetCurrency = 'MYR';
   private baseAmount = 0;
-  private conversionRate = 0;
+  private conversionRate = 1;
   private updateConversionRateDebounced = debounce(
     this.updateConversionRate.bind(this),
     this.DEBOUNCE_TIME_MS
@@ -43,7 +43,8 @@ export class ConverterFormComponent implements OnInit {
   constructor(private converterService: ConverterService) {}
 
   ngOnInit(): void {
-    this.updateConversionRateDebounced();
+    // Comment during development to save API
+    // this.updateConversionRateDebounced();
   }
 
   public onBaseCurrencyChanged(newCurrency: string) {
