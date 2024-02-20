@@ -8,7 +8,7 @@ import debounce from '../../utils/debounce';
   standalone: true,
   imports: [ConverterFormPanelComponent],
   template: `
-    <div>
+    <div class="border-2 border-red-300 rounded-lg px-2 py-2">
       <app-converter-form-panel
         headerText="Amount"
         idPrefix="base"
