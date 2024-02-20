@@ -16,3 +16,4 @@ Three key features: convertor, history, financial news.
 - Detect location
 - Financial news
 - Swapping top and bottom
+- Navbar for router
