@@ -4,13 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-news',
   standalone: true,
   imports: [],
-  template: `
-    <p>
-      news works!
-    </p>
-  `,
-  styles: ``
+  template: ` <p>news works!</p> `,
 })
-export class NewsComponent {
-
-}
+export class NewsComponent {}

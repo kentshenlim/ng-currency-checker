@@ -9,6 +9,7 @@ Angular, [Freecurrency API](https://freecurrencyapi.com/), AG grid,
 Three key features: convertor, history, financial news.
 
 - Favicon
+- Icon for nav bar
 - Convertor (showing flags)
 - Last converted (local storage)
 - History (AG grid here)
@@ -16,4 +17,4 @@ Three key features: convertor, history, financial news.
 - Detect location
 - Financial news
 - Swapping top and bottom
-- Navbar for router
+- Error page

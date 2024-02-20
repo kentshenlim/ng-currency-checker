@@ -4,13 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-history',
   standalone: true,
   imports: [],
-  template: `
-    <p>
-      history works!
-    </p>
-  `,
-  styles: ``
+  template: ` <p>history works!</p> `,
 })
-export class HistoryComponent {
-
-}
+export class HistoryComponent {}

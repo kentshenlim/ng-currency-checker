@@ -4,13 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-error',
   standalone: true,
   imports: [],
-  template: `
-    <p>
-      error works!
-    </p>
-  `,
-  styles: ``
+  template: ` <p>error works!</p> `,
 })
-export class ErrorComponent {
-
-}
+export class ErrorComponent {}
