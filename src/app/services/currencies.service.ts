@@ -45,6 +45,6 @@ export class CurrenciesService {
   }
 
   public getCodeList() {
-    return Object.keys(this.codeToNameMap);
+    return Object.keys(this.codeToNameMap).sort(); // Alphabetically
   }
 }
