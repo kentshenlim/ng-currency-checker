@@ -17,3 +17,4 @@ Three key features: convertor, history, financial news.
 - Financial news
 - Must handle when amount and when currency changed
 - Swapping top and bottom
+- Handle Infinity

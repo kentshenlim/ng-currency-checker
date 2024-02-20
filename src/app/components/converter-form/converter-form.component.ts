@@ -29,8 +29,8 @@ import debounce from '../../utils/debounce';
   `,
   styles: ``,
 })
-export class ConverterFormComponent {
-  private DEBOUNCE_TIME_MS = 500;
+export class ConverterFormComponent implements OnInit {
+  private DEBOUNCE_TIME_MS = 1000;
 
   private baseCurrency = 'MYR';
   private targetCurrency = 'GBP';
@@ -43,17 +43,22 @@ export class ConverterFormComponent {
 
   constructor(private converterService: ConverterService) {}
 
+  ngOnInit(): void {
+    this.updateConversionRateDebounced();
+  }
+
   public onBaseCurrencyChanged(newCurrency: string) {
     this.baseCurrency = newCurrency;
+    this.updateConversionRateDebounced();
   }
 
   public onTargetCurrencyChanged(newCurrency: string) {
     this.targetCurrency = newCurrency;
+    this.updateConversionRateDebounced();
   }
 
   public onBaseAmountChanged(newAmount: number) {
     this.baseAmount = newAmount;
-    this.updateConversionRateDebounced();
   }
 
   private updateConversionRate() {
