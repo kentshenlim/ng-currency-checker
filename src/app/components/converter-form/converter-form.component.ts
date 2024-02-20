@@ -48,17 +48,17 @@ export class ConverterFormComponent implements OnInit {
     // this.updateConversionRateDebounced();
   }
 
-  public onBaseCurrencyChanged(newCurrency: string) {
+  onBaseCurrencyChanged(newCurrency: string) {
     this.baseCurrency = newCurrency;
     this.updateConversionRateDebounced();
   }
 
-  public onTargetCurrencyChanged(newCurrency: string) {
+  onTargetCurrencyChanged(newCurrency: string) {
     this.targetCurrency = newCurrency;
     this.updateConversionRateDebounced();
   }
 
-  public onBaseAmountChanged(newAmount: number) {
+  onBaseAmountChanged(newAmount: number) {
     // Handle max amount here
     this.baseAmount = newAmount;
   }

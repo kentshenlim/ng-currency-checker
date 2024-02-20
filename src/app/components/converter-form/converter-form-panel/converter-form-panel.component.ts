@@ -91,7 +91,7 @@ export class ConverterFormPanelComponent implements OnInit {
     this.amountChanged.emit(amountNew);
   }
 
-  getFlagUrl() {
+  public getFlagUrl() {
     const flagCode = this.currenciesService.getFlagCodeFromCode(
       this.selectedCode
     );
