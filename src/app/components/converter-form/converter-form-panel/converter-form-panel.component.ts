@@ -15,32 +15,39 @@ import { CurrenciesService } from '../../../services/currencies.service';
   imports: [],
   template: `
     <form>
-      <h3>{{ headerText }}</h3>
-      <div>
-        <label [for]="idPrefix + 'Currency'">Amount</label>
-        <select
-          [name]="idPrefix + 'Currency'"
-          [id]="idPrefix + 'Currency'"
-          (change)="onChangeCurrency()"
-          #currencySelected
-        >
-          @for (code of codeArray; track code) {
-          <option [value]="code" [selected]="selectedCode === code">
-            {{ code }}
-          </option>
-          }
-        </select>
-      </div>
-      <div>
-        <input
-          type="number"
-          [id]="idPrefix + 'Amount'"
-          [name]="idPrefix + 'Amount'"
-          [value]="selectedAmount"
-          (keyup)="onChangeAmount()"
-          [disabled]="!isAmountMutable"
-          #amountSelected
-        />
+      <h3 class="text-sm font-medium mb-3">{{ headerText }}</h3>
+      <div class="flex [&>div]:flex-grow [&>div]:w-1 gap-4">
+        <div class="flex items-center gap-2">
+          <div
+            class="w-10 rounded-full aspect-square overflow-hidden overflow border bg-center"
+            style="background-image: url(https://flagsapi.com/MY/flat/64.png)"
+          ></div>
+          <select
+            [name]="idPrefix + 'Currency'"
+            [id]="idPrefix + 'Currency'"
+            (change)="onChangeCurrency()"
+            #currencySelected
+            class="form-input-element"
+          >
+            @for (code of codeArray; track code) {
+            <option [value]="code" [selected]="selectedCode === code">
+              {{ code }}
+            </option>
+            }
+          </select>
+        </div>
+        <div class="flex items-center justify-end">
+          <input
+            type="number"
+            [id]="idPrefix + 'Amount'"
+            [name]="idPrefix + 'Amount'"
+            [value]="selectedAmount"
+            (keyup)="onChangeAmount()"
+            [disabled]="!isAmountMutable"
+            #amountSelected
+            class="text-right w-[80%] px-2 form-input-element"
+          />
+        </div>
       </div>
     </form>
   `,

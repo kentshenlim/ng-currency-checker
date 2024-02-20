@@ -10,7 +10,7 @@ Three key features: convertor, history, financial news.
 
 - Favicon
 - Icon for nav bar
-- Convertor (showing flags)
+- Convertor (showing flags), need currency to mapper
 - Last converted (local storage)
 - History (AG grid here)
 - Last view history
