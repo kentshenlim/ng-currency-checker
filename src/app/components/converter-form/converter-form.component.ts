@@ -30,11 +30,11 @@ import debounce from '../../utils/debounce';
   styles: ``,
 })
 export class ConverterFormComponent implements OnInit {
-  private DEBOUNCE_TIME_MS = 1000;
+  private readonly DEBOUNCE_TIME_MS = 250;
 
   private baseCurrency = 'MYR';
-  private targetCurrency = 'GBP';
-  private baseAmount = 1;
+  private targetCurrency = 'MYR';
+  private baseAmount = 0;
   private conversionRate = 0;
   private updateConversionRateDebounced = debounce(
     this.updateConversionRate.bind(this),
@@ -58,6 +58,7 @@ export class ConverterFormComponent implements OnInit {
   }
 
   public onBaseAmountChanged(newAmount: number) {
+    // Handle max amount here
     this.baseAmount = newAmount;
   }
 

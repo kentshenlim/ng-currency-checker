@@ -51,6 +51,8 @@ import { CurrenciesService } from '../../../services/currencies.service';
   `,
 })
 export class ConverterFormPanelComponent implements OnInit {
+  private readonly MAX_AMOUNT = Number.MAX_SAFE_INTEGER / 100_000;
+
   // The binding part could have been done with reactive form but okay
   @Input() headerText = 'Amount';
   @Input() idPrefix = '';
@@ -77,8 +79,13 @@ export class ConverterFormPanelComponent implements OnInit {
 
   onChangeAmount() {
     if (!this.isAmountMutable) return;
-    this.amountChanged.emit(
-      +(this.amountSelected.nativeElement as HTMLInputElement).value
-    );
+    const amountInput = this.amountSelected.nativeElement as HTMLInputElement;
+    let amountNew = +amountInput.value;
+    if (amountNew >= this.MAX_AMOUNT) {
+      amountNew = Math.floor(amountNew / 10);
+      amountInput.value = String(amountNew);
+      alert('Maximum amount exceeded!');
+    }
+    this.amountChanged.emit(amountNew);
   }
 }
