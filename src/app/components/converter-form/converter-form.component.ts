@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ConverterService } from '../../services/converter.service';
+import { CurrenciesService } from '../../services/currencies.service';
 import { ConverterFormPanelComponent } from './converter-form-panel/converter-form-panel.component';
 import debounce from '../../utils/debounce';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-converter-form',
   standalone: true,
-  imports: [ConverterFormPanelComponent],
+  imports: [ConverterFormPanelComponent, DecimalPipe],
   template: `
-    <div class="bg-gray-50 rounded-lg px-3 py-2 BG-APP">
+    <div class="bg-gray-50 rounded-lg px-3 py-2 BG-APP mb-6">
       <app-converter-form-panel
         headerText="Amount"
         idPrefix="base"
@@ -27,6 +29,15 @@ import debounce from '../../utils/debounce';
         (currencyChanged)="onTargetCurrencyChanged($event)"
       />
     </div>
+    <div>
+      <div class="text-sm mb-2">Indicative Exchange Rate</div>
+      <p class="text-sm font-medium">
+        1 <span> {{ getBaseCurrencyName() }}</span> =
+        <span>{{ getConversionRate() | number : '1.0-4' }}</span
+        >&nbsp;
+        <span>{{ getTargetCurrencyName() }}</span>
+      </p>
+    </div>
   `,
 })
 export class ConverterFormComponent implements OnInit {
@@ -41,11 +52,14 @@ export class ConverterFormComponent implements OnInit {
     this.DEBOUNCE_TIME_MS
   );
 
-  constructor(private converterService: ConverterService) {}
+  constructor(
+    private converterService: ConverterService,
+    private currenciesService: CurrenciesService
+  ) {}
 
   ngOnInit(): void {
     // Comment during development to save API
-    this.updateConversionRateDebounced();
+    // this.updateConversionRateDebounced();
   }
 
   onBaseCurrencyChanged(newCurrency: string) {
@@ -59,7 +73,6 @@ export class ConverterFormComponent implements OnInit {
   }
 
   onBaseAmountChanged(newAmount: number) {
-    // Handle max amount here
     this.baseAmount = newAmount;
   }
 
@@ -99,5 +112,13 @@ export class ConverterFormComponent implements OnInit {
 
   public getConversionRate() {
     return this.conversionRate;
+  }
+
+  public getBaseCurrencyName() {
+    return this.currenciesService.getFullNameFromCode(this.baseCurrency);
+  }
+
+  public getTargetCurrencyName() {
+    return this.currenciesService.getFullNameFromCode(this.targetCurrency);
   }
 }
