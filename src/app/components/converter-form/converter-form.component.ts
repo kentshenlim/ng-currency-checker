@@ -27,7 +27,6 @@ import debounce from '../../utils/debounce';
       />
     </div>
   `,
-  styles: ``,
 })
 export class ConverterFormComponent implements OnInit {
   private readonly DEBOUNCE_TIME_MS = 250;

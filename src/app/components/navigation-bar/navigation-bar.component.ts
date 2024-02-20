@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <nav>
-      <ul>
+    <nav class="px-3">
+      <ul class="flex justify-between">
         <li>Converter</li>
         <li>Trend</li>
         <li>News</li>

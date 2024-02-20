@@ -44,11 +44,6 @@ import { CurrenciesService } from '../../../services/currencies.service';
       </div>
     </form>
   `,
-  styles: `
-    form {
-      border: solid red 3px;
-    }
-  `,
 })
 export class ConverterFormPanelComponent implements OnInit {
   private readonly MAX_AMOUNT = Number.MAX_SAFE_INTEGER / 100_000;
