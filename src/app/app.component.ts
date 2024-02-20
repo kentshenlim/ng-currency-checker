@@ -8,7 +8,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
   standalone: true,
   imports: [CommonModule, RouterOutlet, NavigationBarComponent],
   template: `
-    <h1>Current Converter</h1>
+    <h1>Currency Converter</h1>
     <p>Check live rates, trends and financial news.</p>
     <router-outlet></router-outlet>
     <app-navigation-bar />
