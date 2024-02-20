@@ -17,7 +17,7 @@ import debounce from '../../utils/debounce';
         (currencyChanged)="onBaseCurrencyChanged($event)"
         (amountChanged)="onBaseAmountChanged($event)"
       />
-      <button class="my-5">Swap</button>
+      <button (click)="onClickSwap()" class="my-5">Swap</button>
       <app-converter-form-panel
         headerText="Converted Amount"
         idPrefix="target"
@@ -45,7 +45,7 @@ export class ConverterFormComponent implements OnInit {
 
   ngOnInit(): void {
     // Comment during development to save API
-    // this.updateConversionRateDebounced();
+    this.updateConversionRateDebounced();
   }
 
   onBaseCurrencyChanged(newCurrency: string) {
@@ -63,7 +63,17 @@ export class ConverterFormComponent implements OnInit {
     this.baseAmount = newAmount;
   }
 
+  onClickSwap() {
+    [this.baseCurrency, this.targetCurrency] = [
+      this.targetCurrency,
+      this.baseCurrency,
+    ];
+    this.baseAmount = this.getConvertedAmount();
+    this.updateConversionRateDebounced();
+  }
+
   private updateConversionRate() {
+    console.log('expensive');
     this.converterService
       .getConversionRate(this.baseCurrency, this.targetCurrency)
       .subscribe((obj) => {

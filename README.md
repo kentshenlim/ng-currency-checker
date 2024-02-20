@@ -18,3 +18,4 @@ Three key features: convertor, history, financial news.
 - Swapping top and bottom
 - Error page
 - Uncomment ngInit of converter after development to allow init API
+- How to not call updateConversionRate so many times
