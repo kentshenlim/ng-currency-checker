@@ -8,11 +8,12 @@ import {
   ElementRef,
 } from '@angular/core';
 import { CurrenciesService } from '../../../services/currencies.service';
+import { CurrencyCustomPipe } from '../../../pipes/currencyCustom.pipe';
 
 @Component({
   selector: 'app-converter-form-panel',
   standalone: true,
-  imports: [],
+  imports: [CurrencyCustomPipe],
   template: `
     <form>
       <h3>{{ headerText }}</h3>
@@ -36,7 +37,7 @@ import { CurrenciesService } from '../../../services/currencies.service';
           type="number"
           [id]="idPrefix + 'Amount'"
           [name]="idPrefix + 'Amount'"
-          [value]="selectedAmount"
+          [value]="selectedAmount | currencyCustom"
           (keyup)="onChangeAmount()"
           [disabled]="!isAmountMutable"
           #amountSelected
