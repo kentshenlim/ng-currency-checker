@@ -20,7 +20,7 @@ import { CurrenciesService } from '../../../services/currencies.service';
         <div class="flex items-center gap-2">
           <div
             class="w-10 rounded-full aspect-square overflow-hidden overflow border bg-center"
-            style="background-image: url(https://flagsapi.com/MY/flat/64.png)"
+            [style.backgroundImage]="'url(' + getFlagUrl() + ')'"
           ></div>
           <select
             [name]="idPrefix + 'Currency'"
@@ -58,7 +58,7 @@ export class ConverterFormPanelComponent implements OnInit {
   // The binding part could have been done with reactive form but okay
   @Input() headerText = 'Amount';
   @Input() idPrefix = '';
-  @Input() selectedCode = '';
+  @Input() selectedCode = 'MYR';
   @Input() selectedAmount = 0;
   @Input() isAmountMutable = true;
   codeArray: string[] = [];
@@ -89,5 +89,12 @@ export class ConverterFormPanelComponent implements OnInit {
       alert('Maximum amount exceeded!');
     }
     this.amountChanged.emit(amountNew);
+  }
+
+  getFlagUrl() {
+    const flagCode = this.currenciesService.getFlagCodeFromCode(
+      this.selectedCode
+    );
+    return `https://flagsapi.com/${flagCode}/flat/64.png`;
   }
 }

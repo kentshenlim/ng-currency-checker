@@ -40,8 +40,48 @@ export class CurrenciesService {
     ZAR: 'South African Rand',
   };
 
+  private codeToFlagCode: Record<string, string> = {
+    EUR: 'DE',
+    USD: 'US',
+    JPY: 'JP',
+    BGN: 'BG',
+    CZK: 'CZ',
+    DKK: 'DK',
+    GBP: 'GB',
+    HUF: 'HU',
+    PLN: 'PL',
+    RON: 'RO',
+    SEK: 'SE',
+    CHF: 'CH',
+    ISK: 'IS',
+    NOK: 'NO',
+    HRK: 'HR',
+    RUB: 'RU',
+    TRY: 'TR',
+    AUD: 'AU',
+    BRL: 'BR',
+    CAD: 'CA',
+    CNY: 'CN',
+    HKD: 'HK',
+    IDR: 'ID',
+    ILS: 'IL',
+    INR: 'IN',
+    KRW: 'KR',
+    MXN: 'MX',
+    MYR: 'MY',
+    NZD: 'NZ',
+    PHP: 'PH',
+    SGD: 'SG',
+    THB: 'TH',
+    ZAR: 'ZA',
+  };
+
   public getFullNameFromCode(name: string): string {
     return this.codeToNameMap[name];
+  }
+
+  public getFlagCodeFromCode(code: string): string {
+    return this.codeToFlagCode[code];
   }
 
   public getCodeList() {

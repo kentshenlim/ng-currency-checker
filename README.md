@@ -10,7 +10,6 @@ Three key features: convertor, history, financial news.
 
 - Favicon
 - Icon for nav bar
-- Convertor (showing flags), need currency to mapper
 - Last converted (local storage)
 - History (AG grid here)
 - Last view history
@@ -18,5 +17,3 @@ Three key features: convertor, history, financial news.
 - Financial news
 - Swapping top and bottom
 - Error page
-- Need to extract out color for the main app panel because used across different
-  comp
