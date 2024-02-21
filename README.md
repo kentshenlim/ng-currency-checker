@@ -9,9 +9,8 @@ Angular, [Freecurrency API](https://freecurrencyapi.com/), AG grid,
 Three key features: convertor, history, financial news.
 
 - Favicon
-- Icon for nav bar
 - Last converted (local storage)
-- History (AG grid here)
+- History (AG grid here), last 12 months
 - Last view history
 - Detect location
 - Financial news
@@ -19,4 +18,3 @@ Three key features: convertor, history, financial news.
 - Error page
 - Uncomment ngInit of converter after development to allow init API
 - How to not call updateConversionRate so many times
-- Remove tailwind from source control
