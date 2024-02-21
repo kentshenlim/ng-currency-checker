@@ -12,7 +12,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   imports: [ConverterFormPanelComponent, DecimalPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <div class="bg-gray-50 rounded-lg px-3 py-2 BG-APP mb-6">
+    <div class="rounded-lg px-3 py-2 mb-6 bg-CANVA">
       <app-converter-form-panel
         headerText="Amount"
         idPrefix="base"
@@ -21,7 +21,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         (currencyChanged)="onBaseCurrencyChanged($event)"
         (amountChanged)="onBaseAmountChanged($event)"
       />
-      <div class="w-full mx-auto relative my-6 BORDER-MAIN">
+      <div class="w-full mx-auto relative my-6 border border-MAIN">
         <button
           (click)="onClickSwap()"
           class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 aspect-square rounded-full bg-sky-200/60 flex items-center justify-center"

@@ -4,19 +4,7 @@
 
 @layer components {
   .form-input-element {
-    @apply border-2 border-sky-100/60 rounded-md outline-none bg-sky-100/60;
+    @apply border-2 rounded-md outline-none border-sky-100/60 bg-sky-100/60;
     @apply focus:border-sky-200/60 focus:bg-sky-200/60;
-  }
-}
-
-@layer utilities {
-  .BG-MAIN {
-    @apply bg-sky-100;
-  }
-  .BG-APP {
-    @apply bg-sky-50;
-  }
-  .BORDER-MAIN {
-    @apply border border-sky-100;
   }
 }
