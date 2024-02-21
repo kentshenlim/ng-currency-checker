@@ -24,7 +24,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
       <div class="w-full mx-auto relative my-6 BORDER-MAIN">
         <button
           (click)="onClickSwap()"
-          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 aspect-square rounded-full bg-neutral-300/70 flex items-center justify-center"
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 aspect-square rounded-full bg-sky-200/60 flex items-center justify-center"
         >
           <ion-icon
             name="swap-vertical-outline"

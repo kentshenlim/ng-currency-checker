@@ -640,6 +640,10 @@ video {
   isolation: isolate;
 }
 
+.m-0 {
+  margin: 0px;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -810,6 +814,11 @@ video {
   border-width: 2px;
 }
 
+.border-red-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(248 113 113 / var(--tw-border-opacity));
+}
+
 .bg-gray-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
@@ -874,6 +883,20 @@ video {
   background-color: rgb(212 212 212 / 0.7);
 }
 
+.bg-sky-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(186 230 253 / var(--tw-bg-opacity));
+}
+
+.bg-sky-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(224 242 254 / var(--tw-bg-opacity));
+}
+
+.bg-sky-200\/60 {
+  background-color: rgb(186 230 253 / 0.6);
+}
+
 .bg-center {
   background-position: center;
 }
@@ -908,8 +931,22 @@ video {
   padding-bottom: 1.25rem;
 }
 
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pt-2 {
+  padding-top: 0.5rem;
 }
 
 .text-center {
@@ -1057,6 +1094,19 @@ video {
   k: string;
 }
 
+.\[\&\>\*\]\:m-0>* {
+  margin: 0px;
+}
+
+.\[\&\>\*\]\:border>* {
+  border-width: 1px;
+}
+
+.\[\&\>\*\]\:border-green-300>* {
+  --tw-border-opacity: 1;
+  border-color: rgb(134 239 172 / var(--tw-border-opacity));
+}
+
 .\[\&\>div\]\:w-1>div {
   width: 0.25rem;
 }
@@ -1067,4 +1117,9 @@ video {
 
 .\[\&\>div\]\:text-center>div {
   text-align: center;
+}
+
+.\[\&_ion-icon\]\:text-lg ion-icon {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }

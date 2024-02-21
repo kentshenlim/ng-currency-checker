@@ -21,7 +21,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
       <section class="py-5 h-1 flex-grow px-3">
         <router-outlet></router-outlet>
       </section>
-      <section class="py-3.5">
+      <section>
         <app-navigation-bar />
       </section>
     </div>
