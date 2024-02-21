@@ -4,11 +4,13 @@ import { CurrenciesService } from '../../services/currencies.service';
 import { ConverterFormPanelComponent } from './converter-form-panel/converter-form-panel.component';
 import debounce from '../../utils/debounce';
 import { DecimalPipe } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-converter-form',
   standalone: true,
   imports: [ConverterFormPanelComponent, DecimalPipe],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="bg-gray-50 rounded-lg px-3 py-2 BG-APP mb-6">
       <app-converter-form-panel
@@ -22,9 +24,12 @@ import { DecimalPipe } from '@angular/common';
       <div class="w-full mx-auto relative my-6 BORDER-MAIN">
         <button
           (click)="onClickSwap()"
-          class="bg-green-300 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 aspect-square rounded-full bg-neutral-300/70 flex items-center justify-center"
         >
-          Swap
+          <ion-icon
+            name="swap-vertical-outline"
+            class="text-lg text-ACCENT"
+          ></ion-icon>
         </button>
       </div>
       <app-converter-form-panel

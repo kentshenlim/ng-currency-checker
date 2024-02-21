@@ -5,7 +5,9 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <h1 class="font-semibold text-2xl mb-2 text-center">Currency Converter</h1>
+    <h1 class="font-bold text-2xl mb-2 text-center text-ACCENT">
+      Currency Converter
+    </h1>
     <p class="text-center text-sm">
       Check live rates, trends and financial news.
     </p>

@@ -6,9 +6,11 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   template: `
-    <nav class="flex justify-between [&>div]:flex-grow [&>div]:text-center">
+    <nav
+      class="flex justify-between [&>div]:flex-grow [&>div]:text-center text-ACCENT"
+    >
       <div>
-        <a routerLink="/">Converter</a>
+        <a routerLink="/">Convert</a>
       </div>
       <div>
         <a routerLink="/trend">Trend</a>

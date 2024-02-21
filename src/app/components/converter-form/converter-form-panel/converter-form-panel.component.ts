@@ -15,7 +15,7 @@ import { CurrenciesService } from '../../../services/currencies.service';
   imports: [],
   template: `
     <form>
-      <h3 class="text-sm font-medium mb-3">{{ headerText }}</h3>
+      <h3 class="text-sm font-medium mb-3 text-ACCENT">{{ headerText }}</h3>
       <div class="flex [&>div]:flex-grow [&>div]:w-1 gap-4">
         <div class="flex items-center gap-2">
           <div
