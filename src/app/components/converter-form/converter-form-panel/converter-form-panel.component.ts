@@ -7,12 +7,13 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
+import { CurrencySelectorComponent } from '../../_common-ui/currency-selector/currency-selector.component';
 import { CurrenciesService } from '../../../services/currencies.service';
 
 @Component({
   selector: 'app-converter-form-panel',
   standalone: true,
-  imports: [],
+  imports: [CurrencySelectorComponent],
   template: `
     <form>
       <h3 class="text-sm font-medium mb-3 text-ACCENT">{{ headerText }}</h3>
@@ -22,19 +23,11 @@ import { CurrenciesService } from '../../../services/currencies.service';
             class="w-10 rounded-full aspect-square overflow-hidden overflow border bg-center"
             [style.backgroundImage]="'url(' + getFlagUrl() + ')'"
           ></div>
-          <select
-            [name]="idPrefix + 'Currency'"
-            [id]="idPrefix + 'Currency'"
-            (change)="onChangeCurrency()"
-            #currencySelected
-            class="form-input-element"
-          >
-            @for (code of codeArray; track code) {
-            <option [value]="code" [selected]="selectedCode === code">
-              {{ code }}
-            </option>
-            }
-          </select>
+          <app-currency-selector
+            [idPrefix]="idPrefix"
+            [selectedCode]="selectedCode"
+            (currencyChanged)="onChangeCurrency($event)"
+          />
         </div>
         <div class="flex items-center justify-end">
           <input
@@ -64,7 +57,6 @@ export class ConverterFormPanelComponent implements OnInit {
   codeArray: string[] = [];
   @Output() currencyChanged = new EventEmitter<string>();
   @Output() amountChanged = new EventEmitter<number>();
-  @ViewChild('currencySelected') currencySelected!: ElementRef;
   @ViewChild('amountSelected') amountSelected!: ElementRef;
 
   constructor(private currenciesService: CurrenciesService) {}
@@ -73,10 +65,8 @@ export class ConverterFormPanelComponent implements OnInit {
     this.codeArray = this.currenciesService.getCodeList();
   }
 
-  onChangeCurrency() {
-    this.currencyChanged.emit(
-      (this.currencySelected.nativeElement as HTMLSelectElement).value
-    );
+  onChangeCurrency(currencyNew: string) {
+    this.currencyChanged.emit(currencyNew);
   }
 
   onChangeAmount() {
