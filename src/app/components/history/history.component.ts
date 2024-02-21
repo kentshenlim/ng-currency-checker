@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { ChartComponent } from './chart/chart.component';
 
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [],
-  template: ` <p>history works!</p> `,
+  imports: [ChartComponent],
+  template: ` <app-chart />`,
 })
 export class HistoryComponent {}
