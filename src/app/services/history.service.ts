@@ -27,6 +27,17 @@ export class HistoryService {
     httpParams.append('currencies', this.targetCurrency);
   }
 
+  private getDateStrings() {
+    const dateStrings: string[] = [];
+    let date = new Date();
+    date.setDate(15); // Take at day 15 of last 12 months
+    for (let i = 0; i < 12; i++) {
+      dateStrings.push(this.dateObjToGoodString(date));
+      date.setMonth(date.getMonth() - 1);
+    }
+    return dateStrings;
+  }
+
   private dateObjToGoodString(d: Date) {
     const year = d.getFullYear().toString();
     const month = (d.getMonth() + 1).toString().padStart(2, '0');

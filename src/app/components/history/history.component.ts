@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartComponent } from './chart/chart.component';
+import { HistoryService } from '../../services/history.service';
 
 @Component({
   selector: 'app-history',
@@ -7,4 +8,10 @@ import { ChartComponent } from './chart/chart.component';
   imports: [ChartComponent],
   template: ` <app-chart />`,
 })
-export class HistoryComponent {}
+export class HistoryComponent implements OnInit {
+  constructor(private historyService: HistoryService) {}
+
+  ngOnInit(): void {
+    // console.log(this.historyService.getDateStrings());
+  }
+}
