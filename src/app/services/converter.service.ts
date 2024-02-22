@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import debounce from '../utils/debounce';
 import { ConverterEmit } from '../interfaces/converter-emit';
+import constants from '../constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConverterService {
   // Do not manage baseAmount because History will not need it
-  private readonly API_KEY =
-    'fca_live_9h4SKo24xPAUpBi8nvPAgvZRizauAczIaR10Nb3q'; // Free API, CBA hiding
+  private readonly API_KEY = constants.API_KEY;
   private readonly DEBOUNCE_TIME_MS = 250;
 
   private baseCurrency = 'MYR';
