@@ -71,7 +71,7 @@ export class ConverterFormComponent implements OnInit {
 
   ngOnInit(): void {
     // Comment during development to save API
-    // this.updateConversionRateDebounced();
+    this.updateConversionRateDebounced();
   }
 
   onBaseCurrencyChanged(newCurrency: string) {
