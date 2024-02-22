@@ -98,6 +98,7 @@ export class ConverterService {
           targetCurrency: this.targetCurrency,
           conversionRate: this.conversionRate,
         });
+        this.baseAmountEmit.next(this.baseAmount);
       });
   }
 }
