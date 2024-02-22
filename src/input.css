@@ -11,4 +11,9 @@
   .navbar-centering {
     @apply flex flex-col items-center justify-center gap-0.5;
   }
+
+  .nav-active-tab {
+    @apply bg-sky-400;
+    @apply text-MAIN;
+  }
 }
