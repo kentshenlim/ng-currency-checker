@@ -9,7 +9,6 @@ import constants from '../constants';
   providedIn: 'root',
 })
 export class ConverterService {
-  // Do not manage baseAmount because History will not need it
   private readonly API_KEY = constants.API_KEY;
   private readonly DEBOUNCE_TIME_MS = 250;
 
