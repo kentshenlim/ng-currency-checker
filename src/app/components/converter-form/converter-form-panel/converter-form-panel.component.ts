@@ -6,9 +6,12 @@ import {
   EventEmitter,
   ViewChild,
   ElementRef,
+  OnDestroy,
 } from '@angular/core';
 import { CurrencySelectorComponent } from '../../_common-ui/currency-selector/currency-selector.component';
 import { CurrenciesService } from '../../../services/currencies.service';
+import { ConverterService } from '../../../services/converter.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-converter-form-panel',
@@ -23,11 +26,7 @@ import { CurrenciesService } from '../../../services/currencies.service';
             class="w-10 rounded-full aspect-square overflow-hidden overflow border bg-center"
             [style.backgroundImage]="'url(' + getFlagUrl() + ')'"
           ></div>
-          <app-currency-selector
-            [idPrefix]="idPrefix"
-            [selectedCode]="selectedCode"
-            (currencyChanged)="onChangeCurrency($event)"
-          />
+          <app-currency-selector [isBase]="isBase" />
         </div>
         <div class="flex items-center justify-end">
           <input
@@ -45,28 +44,52 @@ import { CurrenciesService } from '../../../services/currencies.service';
     </form>
   `,
 })
-export class ConverterFormPanelComponent implements OnInit {
+export class ConverterFormPanelComponent implements OnInit, OnDestroy {
   private readonly MAX_AMOUNT = Number.MAX_SAFE_INTEGER / 100_000;
 
   // The binding part could have been done with reactive form but okay
-  @Input() headerText = 'Amount';
-  @Input() idPrefix = '';
-  @Input() selectedCode = 'MYR';
+  @Input() isBase = true;
   @Input() selectedAmount = 0;
-  @Input() isAmountMutable = true;
-  codeArray: string[] = [];
-  @Output() currencyChanged = new EventEmitter<string>();
+  public headerText: 'Amount' | 'Converted Amount' = 'Amount';
+  public idPrefix: 'base' | 'target' = 'base';
+  public isAmountMutable: boolean = true;
+  public selectedCode: string = 'MYR';
+  private currencySub!: Subscription;
   @Output() amountChanged = new EventEmitter<number>();
   @ViewChild('amountSelected') amountSelected!: ElementRef;
 
-  constructor(private currenciesService: CurrenciesService) {}
+  constructor(
+    // Does not depend on inputs, can load directly
+    private converterService: ConverterService,
+    private currenciesService: CurrenciesService
+  ) {}
 
   ngOnInit(): void {
-    this.codeArray = this.currenciesService.getCodeList();
+    // Depends on inputs
+    if (this.isBase) {
+      this.headerText = 'Amount';
+      this.idPrefix = 'base';
+      this.selectedCode = this.converterService.getBaseCurrency();
+      this.currencySub = this.converterService
+        .getEmitSubject()
+        .subscribe(({ baseCurrency }) => {
+          this.selectedCode = baseCurrency;
+        });
+    } else {
+      this.headerText = 'Converted Amount';
+      this.idPrefix = 'target';
+      this.selectedCode = this.converterService.getTargetCurrency();
+      this.currencySub = this.converterService
+        .getEmitSubject()
+        .subscribe(({ targetCurrency }) => {
+          this.selectedCode = targetCurrency;
+        });
+    }
+    this.isAmountMutable = this.isBase;
   }
 
-  onChangeCurrency(currencyNew: string) {
-    this.currencyChanged.emit(currencyNew);
+  ngOnDestroy(): void {
+    this.currencySub.unsubscribe();
   }
 
   onChangeAmount() {

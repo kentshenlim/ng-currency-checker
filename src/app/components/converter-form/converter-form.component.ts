@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConverterService } from '../../services/converter.service';
 import { CurrenciesService } from '../../services/currencies.service';
 import { ConverterFormPanelComponent } from './converter-form-panel/converter-form-panel.component';
-import debounce from '../../utils/debounce';
 import { DecimalPipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-converter-form',
@@ -14,11 +14,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   template: `
     <div class="rounded-lg px-3 py-2 mb-6 bg-CANVA">
       <app-converter-form-panel
-        headerText="Amount"
-        idPrefix="base"
-        [selectedCode]="getBaseCurrency()"
+        [isBase]="true"
         [selectedAmount]="getBaseAmount()"
-        (currencyChanged)="onBaseCurrencyChanged($event)"
         (amountChanged)="onBaseAmountChanged($event)"
       />
       <div class="w-full mx-auto relative my-6 border border-MAIN">
@@ -33,12 +30,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         </button>
       </div>
       <app-converter-form-panel
-        headerText="Converted Amount"
-        idPrefix="target"
-        [selectedCode]="getTargetCurrency()"
+        [isBase]="false"
         [selectedAmount]="getConvertedAmount()"
-        [isAmountMutable]="false"
-        (currencyChanged)="onTargetCurrencyChanged($event)"
       />
     </div>
     <div>
@@ -52,36 +45,28 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     </div>
   `,
 })
-export class ConverterFormComponent implements OnInit {
-  private readonly DEBOUNCE_TIME_MS = 250;
-
-  private baseCurrency = 'MYR';
-  private targetCurrency = 'MYR';
+export class ConverterFormComponent implements OnInit, OnDestroy {
   private baseAmount = 0;
   private conversionRate = 1;
-  private updateConversionRateDebounced = debounce(
-    this.updateConversionRate.bind(this),
-    this.DEBOUNCE_TIME_MS
-  );
+  private conversionSub!: Subscription;
 
   constructor(
+    // Does not depends on input, can load directly
     private converterService: ConverterService,
     private currenciesService: CurrenciesService
   ) {}
 
   ngOnInit(): void {
-    // Comment during development to save API
-    this.updateConversionRateDebounced();
+    // Depends on input
+    this.conversionSub = this.converterService
+      .getEmitSubject()
+      .subscribe(({ conversionRate }) => {
+        this.conversionRate = conversionRate;
+      });
   }
 
-  onBaseCurrencyChanged(newCurrency: string) {
-    this.baseCurrency = newCurrency;
-    this.updateConversionRateDebounced();
-  }
-
-  onTargetCurrencyChanged(newCurrency: string) {
-    this.targetCurrency = newCurrency;
-    this.updateConversionRateDebounced();
+  ngOnDestroy(): void {
+    this.conversionSub.unsubscribe();
   }
 
   onBaseAmountChanged(newAmount: number) {
@@ -89,33 +74,12 @@ export class ConverterFormComponent implements OnInit {
   }
 
   onClickSwap() {
-    [this.baseCurrency, this.targetCurrency] = [
-      this.targetCurrency,
-      this.baseCurrency,
-    ];
-    this.baseAmount = this.getConvertedAmount();
-    this.updateConversionRateDebounced();
-  }
-
-  private updateConversionRate() {
-    console.log('expensive');
-    this.converterService
-      .getConversionRate(this.baseCurrency, this.targetCurrency)
-      .subscribe((obj) => {
-        this.conversionRate = obj.data[this.targetCurrency];
-      });
+    this.converterService.swapCurrency();
+    this.baseAmount = this.getConvertedAmount(); // Amount not handled by converter service
   }
 
   public getConvertedAmount() {
     return Math.round(this.conversionRate * this.baseAmount * 100) / 100;
-  }
-
-  public getBaseCurrency() {
-    return this.baseCurrency;
-  }
-
-  public getTargetCurrency() {
-    return this.targetCurrency;
   }
 
   public getBaseAmount() {
@@ -127,10 +91,14 @@ export class ConverterFormComponent implements OnInit {
   }
 
   public getBaseCurrencyName() {
-    return this.currenciesService.getFullNameFromCode(this.baseCurrency);
+    return this.currenciesService.getFullNameFromCode(
+      this.converterService.getBaseCurrency()
+    );
   }
 
   public getTargetCurrencyName() {
-    return this.currenciesService.getFullNameFromCode(this.targetCurrency);
+    return this.currenciesService.getFullNameFromCode(
+      this.converterService.getTargetCurrency()
+    );
   }
 }

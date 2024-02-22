@@ -8,8 +8,11 @@ Angular, [Freecurrency API](https://freecurrencyapi.com/), AG grid,
 
 Three key features: convertor, history, financial news.
 
+- Now the base amount is not kept when switch tab, also need to init rate if not
+  initialized to 1 when switch tab
 - Favicon
 - Space between app and bottom edge
+- Loading screen for second tab
 - Last converted (local storage)
 - History (AG grid here), last 12 months
 - Last view history
