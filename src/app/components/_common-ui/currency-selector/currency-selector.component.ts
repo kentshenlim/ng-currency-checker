@@ -29,7 +29,6 @@ import { Subscription } from 'rxjs';
       }
     </select>
   `,
-  styles: ``,
 })
 export class CurrencySelectorComponent implements OnInit, OnDestroy {
   @Input() isBase = true;
@@ -71,7 +70,7 @@ export class CurrencySelectorComponent implements OnInit, OnDestroy {
     this.currencySub.unsubscribe();
   }
 
-  onChangeCurrency() {
+  public onChangeCurrency() {
     const newCode = (this.currencySelected.nativeElement as HTMLSelectElement)
       .value;
     if (this.isBase) this.converterService.setBaseCurrency(newCode);

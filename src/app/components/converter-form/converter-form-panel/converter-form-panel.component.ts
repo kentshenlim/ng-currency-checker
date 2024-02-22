@@ -1,9 +1,7 @@
 import {
   Component,
   Input,
-  Output,
   OnInit,
-  EventEmitter,
   ViewChild,
   ElementRef,
   OnDestroy,
@@ -105,7 +103,7 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
     this.amountSub.unsubscribe();
   }
 
-  onChangeAmount() {
+  public onChangeAmount() {
     if (!this.isAmountMutable) return;
     const amountInput = this.amountSelected.nativeElement as HTMLInputElement;
     let amountNew = +amountInput.value;

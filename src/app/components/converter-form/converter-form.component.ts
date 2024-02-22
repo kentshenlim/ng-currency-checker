@@ -46,7 +46,9 @@ export class ConverterFormComponent implements OnInit, OnDestroy {
     // Does not depends on input, can load directly
     private converterService: ConverterService,
     private currenciesService: CurrenciesService
-  ) {}
+  ) {
+    this.conversionRate = this.converterService.getConversionRate();
+  }
 
   ngOnInit(): void {
     // Depends on input
@@ -61,12 +63,8 @@ export class ConverterFormComponent implements OnInit, OnDestroy {
     this.conversionSub.unsubscribe();
   }
 
-  onClickSwap() {
+  public onClickSwap() {
     this.converterService.swapCurrencyAndAmount();
-  }
-
-  public getConvertedAmount() {
-    return this.converterService.getConvertedAmount();
   }
 
   public getConversionRate() {

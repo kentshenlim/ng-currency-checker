@@ -58,6 +58,10 @@ export class ConverterService {
     this.baseAmountEmit.next(this.baseAmount);
   }
 
+  public getConversionRate() {
+    return this.conversionRate;
+  }
+
   public swapCurrencyAndAmount() {
     [this.baseCurrency, this.targetCurrency] = [
       this.targetCurrency,
@@ -99,6 +103,9 @@ export class ConverterService {
           conversionRate: this.conversionRate,
         });
         this.baseAmountEmit.next(this.baseAmount);
+        // Probably bad practice here
+        // Emit conversion rate, but then update base amount
+        // Have to update base amount so that target amount got updated
       });
   }
 }
