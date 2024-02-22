@@ -14,7 +14,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
     NavigationBarComponent,
   ],
   template: `
-    <div class="w-screen h-screen pt-4 flex flex-col border-2 bg-MAIN">
+    <div class="w-screen h-screen pt-4 flex flex-col bg-MAIN">
       <section class="px-3 mb-4">
         <app-header />
       </section>
