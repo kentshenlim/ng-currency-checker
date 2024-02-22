@@ -15,7 +15,15 @@ export class ConverterService {
 
   private baseCurrency = 'MYR';
   private targetCurrency = 'MYR';
+  private conversionRate = 1;
+  private baseAmount = 0;
   private currencyAndRateEmit = new Subject<ConverterEmit>();
+  private baseAmountEmit = new Subject<number>();
+  // Base amount should not be merged with currency and rate
+  // Change in base amount does not require refetching conversion rate so do not
+  // call emitConversionRate()
+  // Base amount cannot be kept in component as the value will not persist on
+  // component destroy (bad UX)
   private emitConversionRateDebounced = debounce(
     this.emitConversionRate.bind(this),
     this.DEBOUNCE_TIME_MS
@@ -41,16 +49,34 @@ export class ConverterService {
     this.emitConversionRateDebounced();
   }
 
-  public getEmitSubject() {
-    return this.currencyAndRateEmit;
+  public getBaseAmount() {
+    return this.baseAmount;
   }
 
-  public swapCurrency() {
+  public setBaseAmount(newAmount: number) {
+    this.baseAmount = newAmount;
+    this.baseAmountEmit.next(this.baseAmount);
+  }
+
+  public swapCurrencyAndAmount() {
     [this.baseCurrency, this.targetCurrency] = [
       this.targetCurrency,
       this.baseCurrency,
     ];
+    this.baseAmount = this.getConvertedAmount();
     this.emitConversionRateDebounced();
+  }
+
+  public getConvertedAmount() {
+    return Math.round(this.conversionRate * this.baseAmount * 100) / 100;
+  }
+
+  public getEmitSubject() {
+    return this.currencyAndRateEmit;
+  }
+
+  public getBaseAmountEmitSubject() {
+    return this.baseAmountEmit;
   }
 
   private emitConversionRate() {
@@ -66,10 +92,11 @@ export class ConverterService {
         params: httpParams,
       })
       .subscribe((val) => {
+        this.conversionRate = val.data[this.targetCurrency];
         this.currencyAndRateEmit.next({
           baseCurrency: this.baseCurrency,
           targetCurrency: this.targetCurrency,
-          conversionRate: val.data[this.targetCurrency],
+          conversionRate: this.conversionRate,
         });
       });
   }

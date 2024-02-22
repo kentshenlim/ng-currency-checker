@@ -49,13 +49,13 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
 
   // The binding part could have been done with reactive form but okay
   @Input() isBase = true;
-  @Input() selectedAmount = 0;
+  public selectedAmount = 0;
   public headerText: 'Amount' | 'Converted Amount' = 'Amount';
   public idPrefix: 'base' | 'target' = 'base';
   public isAmountMutable: boolean = true;
   public selectedCode: string = 'MYR';
   private currencySub!: Subscription;
-  @Output() amountChanged = new EventEmitter<number>();
+  private amountSub!: Subscription;
   @ViewChild('amountSelected') amountSelected!: ElementRef;
 
   constructor(
@@ -67,6 +67,7 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Depends on inputs
     if (this.isBase) {
+      this.selectedAmount = this.converterService.getBaseAmount();
       this.headerText = 'Amount';
       this.idPrefix = 'base';
       this.selectedCode = this.converterService.getBaseCurrency();
@@ -75,7 +76,13 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
         .subscribe(({ baseCurrency }) => {
           this.selectedCode = baseCurrency;
         });
+      this.amountSub = this.converterService
+        .getBaseAmountEmitSubject()
+        .subscribe((baseAmountNew) => {
+          this.selectedAmount = baseAmountNew;
+        });
     } else {
+      this.selectedAmount = this.converterService.getConvertedAmount();
       this.headerText = 'Converted Amount';
       this.idPrefix = 'target';
       this.selectedCode = this.converterService.getTargetCurrency();
@@ -84,12 +91,18 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
         .subscribe(({ targetCurrency }) => {
           this.selectedCode = targetCurrency;
         });
+      this.amountSub = this.converterService
+        .getBaseAmountEmitSubject()
+        .subscribe(() => {
+          this.selectedAmount = this.converterService.getConvertedAmount();
+        });
     }
     this.isAmountMutable = this.isBase;
   }
 
   ngOnDestroy(): void {
     this.currencySub.unsubscribe();
+    this.amountSub.unsubscribe();
   }
 
   onChangeAmount() {
@@ -101,7 +114,7 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
       amountInput.value = String(amountNew);
       alert('Maximum amount exceeded!');
     }
-    this.amountChanged.emit(amountNew);
+    this.converterService.setBaseAmount(amountNew);
   }
 
   public getFlagUrl() {

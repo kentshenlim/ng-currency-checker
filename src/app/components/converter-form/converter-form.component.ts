@@ -13,11 +13,7 @@ import { Subscription } from 'rxjs';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="rounded-lg px-3 py-2 mb-6 bg-CANVA">
-      <app-converter-form-panel
-        [isBase]="true"
-        [selectedAmount]="getBaseAmount()"
-        (amountChanged)="onBaseAmountChanged($event)"
-      />
+      <app-converter-form-panel [isBase]="true" />
       <div class="w-full mx-auto relative my-6 border border-MAIN">
         <button
           (click)="onClickSwap()"
@@ -29,10 +25,7 @@ import { Subscription } from 'rxjs';
           ></ion-icon>
         </button>
       </div>
-      <app-converter-form-panel
-        [isBase]="false"
-        [selectedAmount]="getConvertedAmount()"
-      />
+      <app-converter-form-panel [isBase]="false" />
     </div>
     <div>
       <div class="text-sm mb-2">Indicative Exchange Rate</div>
@@ -46,7 +39,6 @@ import { Subscription } from 'rxjs';
   `,
 })
 export class ConverterFormComponent implements OnInit, OnDestroy {
-  private baseAmount = 0;
   private conversionRate = 1;
   private conversionSub!: Subscription;
 
@@ -69,21 +61,12 @@ export class ConverterFormComponent implements OnInit, OnDestroy {
     this.conversionSub.unsubscribe();
   }
 
-  onBaseAmountChanged(newAmount: number) {
-    this.baseAmount = newAmount;
-  }
-
   onClickSwap() {
-    this.converterService.swapCurrency();
-    this.baseAmount = this.getConvertedAmount(); // Amount not handled by converter service
+    this.converterService.swapCurrencyAndAmount();
   }
 
   public getConvertedAmount() {
-    return Math.round(this.conversionRate * this.baseAmount * 100) / 100;
-  }
-
-  public getBaseAmount() {
-    return this.baseAmount;
+    return this.converterService.getConvertedAmount();
   }
 
   public getConversionRate() {
