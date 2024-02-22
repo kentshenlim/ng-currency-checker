@@ -9,15 +9,19 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class HistoryService {
   private readonly API_KEY = constants.API_KEY;
-  private readonly DEBOUNCE_TIME_MS = 500;
+  private readonly DEBOUNCE_TIME_MS = 1000;
 
   private baseCurrency = 'MYR';
   private targetCurrency = 'MYR';
   private historyPoints: HistoryPoint[] = [];
+  private dateStrings: string[];
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+    this.dateStrings = this.getDateStrings();
+    this.historyPoints = new Array(12);
+  }
 
-  private emitHistoryPoints() {
+  private emitHistoryPoint(dateString: string, idx: number) {
     // Don't call this directly
     console.log('Very expensive');
     const baseUrl = 'https://api.freecurrencyapi.com/v1/historical';
@@ -25,6 +29,18 @@ export class HistoryService {
     httpParams = httpParams.append('apiKey', this.API_KEY);
     httpParams.append('base_currency', this.baseCurrency);
     httpParams.append('currencies', this.targetCurrency);
+    httpParams.append('date', dateString);
+    this.httpClient
+      .get<{ data: { [date: string]: { [currency: string]: number } } }>(
+        baseUrl,
+        {
+          params: httpParams,
+        }
+      )
+      .subscribe((res) => {
+        const val = res.data[dateString][this.targetCurrency];
+        // Push val and month into the array
+      });
   }
 
   private getDateStrings() {
@@ -35,6 +51,7 @@ export class HistoryService {
       dateStrings.push(this.dateObjToGoodString(date));
       date.setMonth(date.getMonth() - 1);
     }
+    dateStrings.reverse();
     return dateStrings;
   }
 
