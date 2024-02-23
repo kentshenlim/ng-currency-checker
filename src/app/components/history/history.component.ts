@@ -4,32 +4,33 @@ import { HistoryService } from '../../services/history.service';
 import { CurrencySelectorComponent } from '../_common-ui/currency-selector/currency-selector.component';
 import { HistoryPoint } from '../../interfaces/history-point';
 import { Subscription } from 'rxjs';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-history',
   standalone: true,
   imports: [CurrencySelectorComponent, ChartComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div>
-      <div>
+      <div class="flex justify-between items-center">
         <app-currency-selector
           [isBase]="true"
           [selectedCode]="baseCurrency"
           (currencyChanged)="onBaseCurrencyChanged($event)"
         />
+        <ion-icon
+          name="arrow-forward-sharp"
+          class="text-xl text-ACCENT"
+        ></ion-icon>
         <app-currency-selector
           [isBase]="false"
           [selectedCode]="targetCurrency"
           (currencyChanged)="onTargetCurrencyChanged($event)"
         />
-        <button type="button" (click)="onClickUpdate()">Update</button>
       </div>
+      <button type="button" (click)="onClickUpdate()">Update</button>
       <app-chart [inputData]="historyPoints" />
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui totam nemo
-        quas est alias, eaque vero! Fugiat nihil voluptatum eligendi molestias
-        quibusdam quaerat amet? Quae natus nesciunt ex minus maiores.
-      </p>
     </div>
   `,
 })
@@ -59,10 +60,14 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
   public onBaseCurrencyChanged(newCurrency: string) {
     this.historyService.setBaseCurrency(newCurrency);
+    this.baseCurrency = newCurrency;
+    // History Service will not emit on currency change
+    // So have to update manually so flag will update
   }
 
   public onTargetCurrencyChanged(newCurrency: string) {
     this.historyService.setTargetCurrency(newCurrency);
+    this.targetCurrency = newCurrency;
   }
 
   public onClickUpdate() {
