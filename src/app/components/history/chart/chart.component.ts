@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, afterRender } from '@angular/core';
 import { AgChartsAngular } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
 import { HistoryPoint } from '../../../interfaces/history-point';
+import { ScrollingService } from '../../../services/scrolling.service';
 
 @Component({
   selector: 'app-chart',
@@ -23,5 +24,8 @@ export class ChartComponent {
   @Input()
   set inputData(data: HistoryPoint[]) {
     this.chartOptions = { ...this.chartOptions, data };
+    this.scrollingService.scrollToBottom();
   }
+
+  constructor(private scrollingService: ScrollingService) {}
 }
