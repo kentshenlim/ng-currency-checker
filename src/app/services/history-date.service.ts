@@ -23,7 +23,7 @@ export class HistoryDateService {
     const dateStrings: string[] = [];
     let date = new Date();
     date.setDate(15);
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
       dateStrings.push(this.dateObjToGoodString(date));
       if (isMonthly) date.setMonth(date.getMonth() - 1);
       else date.setFullYear(date.getFullYear() - 1);

@@ -70,10 +70,10 @@ export class HistoryComponent implements OnInit, OnDestroy {
     this.baseCurrency = this.historyService.getBaseCurrency();
     this.targetCurrency = this.historyService.getTargetCurrency();
     this.isMonthly = this.historyService.getIsMonthly();
+    this.historyPoints = this.historyService.getHistoryPoints();
   }
 
   ngOnInit(): void {
-    // console.log(this.historyService.getDateStrings());
     this.historyEmitSubject = this.historyService
       .getHistoryPointsSubject()
       .subscribe((data) => {

@@ -30,7 +30,7 @@ export class HistoryService {
     private httpClient: HttpClient
   ) {
     this.dateStrings = this.historyDateService.getDateStrings(this.isMonthly);
-    this.historyPoints = new Array(this.dateStrings.length);
+    this.historyPoints = [];
   }
 
   public getBaseCurrency() {
@@ -62,9 +62,14 @@ export class HistoryService {
     this.dateStrings = this.historyDateService.getDateStrings(this.isMonthly);
   }
 
+  public getHistoryPoints() {
+    return this.historyPoints;
+  }
+
   private emitHistoryPoints() {
     // Debounce this
     this.completeCount = 0; // Reset to 0
+    this.historyPoints = new Array(this.dateStrings.length);
     for (let i = 0; i < this.dateStrings.length; i++) {
       this.fetchHistoryPoint(this.dateStrings[i], i);
     }
