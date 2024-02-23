@@ -1,4 +1,4 @@
-import { Component, Input, afterRender } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AgChartsAngular } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
 import { HistoryPoint } from '../../../interfaces/history-point';
@@ -13,19 +13,28 @@ import { ScrollingService } from '../../../services/scrolling.service';
   `,
 })
 export class ChartComponent {
+  @Input() baseCurrency = 'MYR';
+  @Input() targetCurrency = 'MYR';
+  @Input()
+  set inputData(data: HistoryPoint[]) {
+    this.chartOptions = {
+      ...this.chartOptions,
+      data,
+      title: { text: `${this.baseCurrency} to ${this.targetCurrency}` }, // Must update the two currencies
+      // The definition at preamble will not run again because the component is
+      // not instantiated again
+    };
+    this.scrollingService.scrollToBottom();
+  }
+
   public chartOptions: AgChartOptions = {
     data: [],
     series: [{ type: 'line', xKey: 'xKey', yKey: 'value' }],
     background: {
       fill: '#e0f2fe',
     },
+    title: { text: `${this.baseCurrency} to ${this.targetCurrency}` },
   };
-
-  @Input()
-  set inputData(data: HistoryPoint[]) {
-    this.chartOptions = { ...this.chartOptions, data };
-    this.scrollingService.scrollToBottom();
-  }
 
   constructor(private scrollingService: ScrollingService) {}
 }

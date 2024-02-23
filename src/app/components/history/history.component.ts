@@ -49,7 +49,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         <button
           type="button"
           (click)="onClickUpdate()"
-          class="rounded-lg bg-neutral-200 p-2"
+          class="rounded-lg bg-neutral-200 p-2 flex items-center"
           [disabled]="isLoading"
         >
           @if (!isLoading) {
@@ -63,7 +63,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
       </div>
     </div>
     <div class="canva" [class.animate-pulse]="isLoading">
-      <app-chart [inputData]="historyPoints" />
+      <app-chart
+        [inputData]="historyPoints"
+        [baseCurrency]="baseCurrency"
+        [targetCurrency]="targetCurrency"
+      />
     </div>
   `,
 })
@@ -89,6 +93,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.historyPoints = data;
         this.isLoading = false;
+        console.log(this.baseCurrency, this.targetCurrency);
       });
   }
 
