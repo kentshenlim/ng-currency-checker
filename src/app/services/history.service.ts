@@ -3,6 +3,8 @@ import constants from '../constants';
 import { HistoryPoint } from '../interfaces/history-point';
 import debounce from '../utils/debounce';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { HistoryDateService } from './history-date.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +15,47 @@ export class HistoryService {
 
   private baseCurrency = 'MYR';
   private targetCurrency = 'MYR';
-  private historyPoints: HistoryPoint[] = [];
   private dateStrings: string[];
+  private historyPoints: HistoryPoint[] = [];
+  private completeCount = 0; // Number of history points calculated completely
+  private historyPointsEmit = new Subject<HistoryPoint[]>();
 
-  constructor(private httpClient: HttpClient) {
-    this.dateStrings = this.getDateStrings();
-    this.historyPoints = new Array(12);
+  constructor(
+    private historyDateService: HistoryDateService,
+    private httpClient: HttpClient
+  ) {
+    this.dateStrings = this.historyDateService.getDateStrings();
+    this.historyPoints = new Array(this.dateStrings.length);
   }
 
-  private emitHistoryPoint(dateString: string, idx: number) {
+  public getBaseCurrency() {
+    return this.baseCurrency;
+  }
+
+  public setBaseCurrency(newCurrency: string) {
+    this.baseCurrency = newCurrency;
+  }
+
+  public getTargetCurrency() {
+    return this.targetCurrency;
+  }
+
+  public setTargetCurrency(newCurrency: string) {
+    this.targetCurrency = newCurrency;
+  }
+
+  public getHistoryPointsSubject() {
+    return this.historyPointsEmit;
+  }
+
+  public emitHistoryPoints() {
+    this.completeCount = 0; // Reset to 0
+    for (let i = 0; i < this.dateStrings.length; i++) {
+      this.fetchHistoryPoint(this.dateStrings[i], i);
+    }
+  }
+
+  private fetchHistoryPoint(dateString: string, idx: number) {
     // Don't call this directly
     console.log('Very expensive');
     const baseUrl = 'https://api.freecurrencyapi.com/v1/historical';
@@ -39,26 +73,13 @@ export class HistoryService {
       )
       .subscribe((res) => {
         const val = res.data[dateString][this.targetCurrency];
-        // Push val and month into the array
+        const monthStr =
+          this.historyDateService.dateStringToMonthString(dateString);
+        this.historyPoints[idx] = { value: val, month: monthStr };
+        this.completeCount++;
+        if (this.completeCount === this.dateStrings.length)
+          // If all points ready
+          this.historyPointsEmit.next(this.historyPoints);
       });
-  }
-
-  private getDateStrings() {
-    const dateStrings: string[] = [];
-    let date = new Date();
-    date.setDate(15); // Take at day 15 of last 12 months
-    for (let i = 0; i < 12; i++) {
-      dateStrings.push(this.dateObjToGoodString(date));
-      date.setMonth(date.getMonth() - 1);
-    }
-    dateStrings.reverse();
-    return dateStrings;
-  }
-
-  private dateObjToGoodString(d: Date) {
-    const year = d.getFullYear().toString();
-    const month = (d.getMonth() + 1).toString().padStart(2, '0');
-    const day = d.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
   }
 }
