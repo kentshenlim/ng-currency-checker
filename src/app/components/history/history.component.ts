@@ -25,6 +25,11 @@ import { Subscription } from 'rxjs';
         <button type="button" (click)="onClickUpdate()">Update</button>
       </div>
       <app-chart [inputData]="historyPoints" />
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui totam nemo
+        quas est alias, eaque vero! Fugiat nihil voluptatum eligendi molestias
+        quibusdam quaerat amet? Quae natus nesciunt ex minus maiores.
+      </p>
     </div>
   `,
 })
