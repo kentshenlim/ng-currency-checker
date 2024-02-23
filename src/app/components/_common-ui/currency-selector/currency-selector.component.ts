@@ -4,11 +4,10 @@ import {
   Input,
   ViewChild,
   ElementRef,
-  OnDestroy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { CurrenciesService } from '../../../services/currencies.service';
-import { ConverterService } from '../../../services/converter.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-currency-selector',
@@ -30,50 +29,29 @@ import { Subscription } from 'rxjs';
     </select>
   `,
 })
-export class CurrencySelectorComponent implements OnInit, OnDestroy {
+// This component must not be dependent on any service apart from currenciesService
+export class CurrencySelectorComponent implements OnInit {
   @Input() isBase = true;
+  @Input() selectedCode = 'MYR';
   public idPrefix: 'Amount' | 'Converted Amount' = 'Amount';
-  public selectedCode: string = 'MYR';
   public codeArray: string[] = [];
-  private currencySub!: Subscription;
   @ViewChild('currencySelected') currencySelected!: ElementRef;
+  @Output() currencyChanged = new EventEmitter<string>();
 
   constructor(
     // Does not depend on inputs, can load directly
-    private currenciesService: CurrenciesService,
-    private converterService: ConverterService
+    private currenciesService: CurrenciesService
   ) {
     this.codeArray = this.currenciesService.getCodeList();
   }
 
   ngOnInit(): void {
-    if (this.isBase) {
-      this.idPrefix = 'Amount';
-      this.selectedCode = this.converterService.getBaseCurrency();
-      this.currencySub = this.converterService
-        .getEmitSubject()
-        .subscribe(({ baseCurrency }) => {
-          this.selectedCode = baseCurrency;
-        });
-    } else {
-      this.idPrefix = 'Converted Amount';
-      this.selectedCode = this.converterService.getTargetCurrency();
-      this.currencySub = this.converterService
-        .getEmitSubject()
-        .subscribe(({ targetCurrency }) => {
-          this.selectedCode = targetCurrency;
-        });
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.currencySub.unsubscribe();
+    this.idPrefix = this.isBase ? 'Amount' : 'Converted Amount';
   }
 
   public onChangeCurrency() {
     const newCode = (this.currencySelected.nativeElement as HTMLSelectElement)
       .value;
-    if (this.isBase) this.converterService.setBaseCurrency(newCode);
-    else this.converterService.setTargetCurrency(newCode);
+    this.currencyChanged.emit(newCode);
   }
 }

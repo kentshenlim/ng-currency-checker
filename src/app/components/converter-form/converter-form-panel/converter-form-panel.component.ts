@@ -24,7 +24,11 @@ import { Subscription } from 'rxjs';
             class="w-10 rounded-full aspect-square overflow-hidden overflow border bg-center"
             [style.backgroundImage]="'url(' + getFlagUrl() + ')'"
           ></div>
-          <app-currency-selector [isBase]="isBase" />
+          <app-currency-selector
+            [isBase]="isBase"
+            [selectedCode]="selectedCode"
+            (currencyChanged)="onCurrencyChanged($event)"
+          />
         </div>
         <div class="flex items-center justify-end">
           <input
@@ -113,6 +117,11 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
       alert('Maximum amount exceeded!');
     }
     this.converterService.setBaseAmount(amountNew);
+  }
+
+  public onCurrencyChanged(codeNew: string) {
+    if (this.isBase) this.converterService.setBaseCurrency(codeNew);
+    else this.converterService.setTargetCurrency(codeNew);
   }
 
   public getFlagUrl() {
