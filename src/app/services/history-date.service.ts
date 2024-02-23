@@ -19,13 +19,14 @@ export class HistoryDateService {
     'Dec',
   ];
 
-  public getDateStrings() {
+  public getDateStrings(isMonthly: boolean) {
     const dateStrings: string[] = [];
     let date = new Date();
     date.setDate(15);
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
       dateStrings.push(this.dateObjToGoodString(date));
-      date.setMonth(date.getMonth() - 1);
+      if (isMonthly) date.setMonth(date.getMonth() - 1);
+      else date.setFullYear(date.getFullYear() - 1);
     }
     dateStrings.reverse();
     return dateStrings;
@@ -34,6 +35,10 @@ export class HistoryDateService {
   public dateStringToMonthString(dStr: string) {
     const monthIdx = new Date(dStr).getMonth();
     return this.monthMap[monthIdx];
+  }
+
+  public dateStringToYearString(dStr: string) {
+    return new Date(dStr).getFullYear().toString();
   }
 
   private dateObjToGoodString(d: Date) {

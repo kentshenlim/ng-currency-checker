@@ -8,6 +8,7 @@ Angular, [Freecurrency API](https://freecurrencyapi.com/), AG grid,
 
 Three key features: convertor, history, financial news.
 
+- Try using AG Grid for third feature
 - Complete the date problem
 - Favicon
 - Loading screen for second tab

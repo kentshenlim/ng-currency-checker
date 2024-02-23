@@ -1,4 +1,4 @@
 export interface HistoryPoint {
-  month: string;
+  xKey: string;
   value: number;
 }

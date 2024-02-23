@@ -29,7 +29,7 @@ export class HistoryService {
     private historyDateService: HistoryDateService,
     private httpClient: HttpClient
   ) {
-    this.dateStrings = this.historyDateService.getDateStrings();
+    this.dateStrings = this.historyDateService.getDateStrings(this.isMonthly);
     this.historyPoints = new Array(this.dateStrings.length);
   }
 
@@ -59,6 +59,7 @@ export class HistoryService {
 
   public setIsMonthly(isMonthly: boolean) {
     this.isMonthly = isMonthly;
+    this.dateStrings = this.historyDateService.getDateStrings(this.isMonthly);
   }
 
   private emitHistoryPoints() {
@@ -86,10 +87,11 @@ export class HistoryService {
         }
       )
       .subscribe((res) => {
-        const val = res.data[dateString][this.targetCurrency];
-        const monthStr =
-          this.historyDateService.dateStringToMonthString(dateString);
-        this.historyPoints[idx] = { value: val, month: monthStr };
+        const value = res.data[dateString][this.targetCurrency];
+        const xKey = this.isMonthly
+          ? this.historyDateService.dateStringToMonthString(dateString)
+          : this.historyDateService.dateStringToYearString(dateString);
+        this.historyPoints[idx] = { value, xKey };
         this.completeCount++;
         if (this.completeCount === this.dateStrings.length)
           // If all points ready
