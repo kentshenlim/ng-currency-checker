@@ -18,6 +18,7 @@ export class HistoryService {
   private dateStrings: string[];
   private historyPoints: HistoryPoint[] = [];
   private completeCount = 0; // Number of history points calculated completely
+  private isMonthly = true;
   private historyPointsEmit = new Subject<HistoryPoint[]>();
   public emitHistoryPointsDebounced = debounce(
     this.emitHistoryPoints.bind(this),
@@ -50,6 +51,14 @@ export class HistoryService {
 
   public getHistoryPointsSubject() {
     return this.historyPointsEmit;
+  }
+
+  public getIsMonthly() {
+    return this.isMonthly;
+  }
+
+  public setIsMonthly(isMonthly: boolean) {
+    this.isMonthly = isMonthly;
   }
 
   private emitHistoryPoints() {

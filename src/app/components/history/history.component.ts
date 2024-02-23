@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ChartComponent } from './chart/chart.component';
 import { HistoryService } from '../../services/history.service';
 import { CurrencySelectorComponent } from '../_common-ui/currency-selector/currency-selector.component';
@@ -12,8 +18,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   imports: [CurrencySelectorComponent, ChartComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <div>
-      <div class="flex justify-between items-center">
+    <div class="canva">
+      <div class="flex justify-between items-center mb-4">
         <app-currency-selector
           [isBase]="true"
           [selectedCode]="baseCurrency"
@@ -29,7 +35,25 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
           (currencyChanged)="onTargetCurrencyChanged($event)"
         />
       </div>
-      <button type="button" (click)="onClickUpdate()">Update</button>
+      <div class="flex justify-around">
+        <select
+          name="isMonthly"
+          id="isMonthly"
+          class="form-input-element"
+          (change)="onIsMonthlyChanged()"
+          #isMonthlyInput
+        >
+          <option value="monthly" [selected]="isMonthly">Monthly</option>
+          <option value="yearly" [selected]="!isMonthly">Yearly</option>
+        </select>
+        <button
+          type="button"
+          (click)="onClickUpdate()"
+          class="rounded-lg bg-neutral-200 p-2"
+        >
+          Update
+        </button>
+      </div>
       <app-chart [inputData]="historyPoints" />
     </div>
   `,
@@ -39,10 +63,13 @@ export class HistoryComponent implements OnInit, OnDestroy {
   public targetCurrency = 'MYR';
   public historyPoints: HistoryPoint[] = [];
   private historyEmitSubject!: Subscription;
+  public isMonthly = true;
+  @ViewChild('isMonthlyInput') isMonthlyInput!: ElementRef;
 
   constructor(private historyService: HistoryService) {
     this.baseCurrency = this.historyService.getBaseCurrency();
     this.targetCurrency = this.historyService.getTargetCurrency();
+    this.isMonthly = this.historyService.getIsMonthly();
   }
 
   ngOnInit(): void {
@@ -68,6 +95,12 @@ export class HistoryComponent implements OnInit, OnDestroy {
   public onTargetCurrencyChanged(newCurrency: string) {
     this.historyService.setTargetCurrency(newCurrency);
     this.targetCurrency = newCurrency;
+  }
+
+  public onIsMonthlyChanged() {
+    const valString = (this.isMonthlyInput.nativeElement as HTMLSelectElement)
+      .value;
+    this.historyService.setIsMonthly(valString === 'monthly');
   }
 
   public onClickUpdate() {

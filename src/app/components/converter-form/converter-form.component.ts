@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   imports: [ConverterFormPanelComponent, DecimalPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <div class="rounded-lg px-3 py-2 mb-6 bg-CANVA">
+    <div class="canva">
       <app-converter-form-panel [isBase]="true" />
       <div class="w-full mx-auto relative my-6 border border-MAIN">
         <button
