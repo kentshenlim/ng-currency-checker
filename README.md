@@ -8,6 +8,7 @@ Angular, [Freecurrency API](https://freecurrencyapi.com/), AG grid,
 
 Three key features: convertor, history, financial news.
 
+- Set standard for variable instantiation location
 - Try using AG Grid for third feature
 - Favicon
 - Last converted (local storage)

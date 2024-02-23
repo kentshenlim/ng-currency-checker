@@ -33,6 +33,11 @@ export class ChartComponent {
     background: {
       fill: '#e0f2fe',
     },
+    overlays: {
+      noData: {
+        text: 'Click Update to fetch trend',
+      },
+    },
     title: { text: `${this.baseCurrency} to ${this.targetCurrency}` },
   };
 
