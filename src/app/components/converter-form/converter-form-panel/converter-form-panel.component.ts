@@ -7,7 +7,6 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { CurrencySelectorComponent } from '../../_common-ui/currency-selector/currency-selector.component';
-import { CurrenciesService } from '../../../services/currencies.service';
 import { ConverterService } from '../../../services/converter.service';
 import { Subscription } from 'rxjs';
 
@@ -19,17 +18,11 @@ import { Subscription } from 'rxjs';
     <form>
       <h3 class="text-sm font-medium mb-3 text-ACCENT">{{ headerText }}</h3>
       <div class="flex [&>div]:flex-grow [&>div]:w-1 gap-4">
-        <div class="flex items-center gap-2">
-          <div
-            class="w-10 rounded-full aspect-square overflow-hidden overflow border bg-center"
-            [style.backgroundImage]="'url(' + getFlagUrl() + ')'"
-          ></div>
-          <app-currency-selector
-            [isBase]="isBase"
-            [selectedCode]="selectedCode"
-            (currencyChanged)="onCurrencyChanged($event)"
-          />
-        </div>
+        <app-currency-selector
+          [isBase]="isBase"
+          [selectedCode]="selectedCode"
+          (currencyChanged)="onCurrencyChanged($event)"
+        />
         <div class="flex items-center justify-end">
           <input
             type="number"
@@ -62,8 +55,7 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
 
   constructor(
     // Does not depend on inputs, can load directly
-    private converterService: ConverterService,
-    private currenciesService: CurrenciesService
+    private converterService: ConverterService
   ) {}
 
   ngOnInit(): void {
@@ -122,12 +114,5 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
   public onCurrencyChanged(codeNew: string) {
     if (this.isBase) this.converterService.setBaseCurrency(codeNew);
     else this.converterService.setTargetCurrency(codeNew);
-  }
-
-  public getFlagUrl() {
-    const flagCode = this.currenciesService.getFlagCodeFromCode(
-      this.selectedCode
-    );
-    return `https://flagsapi.com/${flagCode}/flat/64.png`;
   }
 }

@@ -14,19 +14,25 @@ import { CurrenciesService } from '../../../services/currencies.service';
   standalone: true,
   imports: [],
   template: `
-    <select
-      [name]="idPrefix + 'Currency'"
-      [id]="idPrefix + 'Currency'"
-      (change)="onChangeCurrency()"
-      #currencySelected
-      class="form-input-element"
-    >
-      @for (code of codeArray; track code) {
-      <option [value]="code" [selected]="selectedCode === code">
-        {{ code }}
-      </option>
-      }
-    </select>
+    <div class="flex items-center gap-2">
+      <div
+        class="w-10 rounded-full aspect-square overflow-hidden overflow border bg-center"
+        [style.backgroundImage]="'url(' + getFlagUrl() + ')'"
+      ></div>
+      <select
+        [name]="idPrefix + 'Currency'"
+        [id]="idPrefix + 'Currency'"
+        (change)="onChangeCurrency()"
+        #currencySelected
+        class="form-input-element"
+      >
+        @for (code of codeArray; track code) {
+        <option [value]="code" [selected]="selectedCode === code">
+          {{ code }}
+        </option>
+        }
+      </select>
+    </div>
   `,
 })
 // This component must not be dependent on any service apart from currenciesService
@@ -53,5 +59,12 @@ export class CurrencySelectorComponent implements OnInit {
     const newCode = (this.currencySelected.nativeElement as HTMLSelectElement)
       .value;
     this.currencyChanged.emit(newCode);
+  }
+
+  public getFlagUrl() {
+    const flagCode = this.currenciesService.getFlagCodeFromCode(
+      this.selectedCode
+    );
+    return `https://flagsapi.com/${flagCode}/flat/64.png`;
   }
 }
