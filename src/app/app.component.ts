@@ -45,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.scrollSub = this.scrollingService.getScrollSubject().subscribe(() => {
       const el = this.mainCanva.nativeElement as HTMLElement;
       el.scrollTop = el.scrollHeight;
+      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
     });
   }
 

@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 })
 export class HistoryService {
   private readonly API_KEY = constants.API_KEY;
-  private readonly DEBOUNCE_TIME_MS = 1000;
+  private readonly DEBOUNCE_TIME_MS = 4000;
 
   private baseCurrency = 'MYR';
   private targetCurrency = 'MYR';

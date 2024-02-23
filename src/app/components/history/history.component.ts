@@ -50,12 +50,19 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
           type="button"
           (click)="onClickUpdate()"
           class="rounded-lg bg-neutral-200 p-2"
+          [disabled]="isLoading"
         >
-          Update
+          @if (!isLoading) {
+          <p>Update</p>
+          } @else {
+          <ion-icon name="cog-sharp" class="animate-spin text-lg text-ACCENT"
+            >Update</ion-icon
+          >
+          }
         </button>
       </div>
     </div>
-    <div class="canva">
+    <div class="canva" [class.animate-pulse]="isLoading">
       <app-chart [inputData]="historyPoints" />
     </div>
   `,
@@ -66,6 +73,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   public historyPoints: HistoryPoint[] = [];
   private historyEmitSubject!: Subscription;
   public isMonthly = true;
+  public isLoading = false;
   @ViewChild('isMonthlyInput') isMonthlyInput!: ElementRef;
 
   constructor(private historyService: HistoryService) {
@@ -80,6 +88,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
       .getHistoryPointsSubject()
       .subscribe((data) => {
         this.historyPoints = data;
+        this.isLoading = false;
       });
   }
 
@@ -106,6 +115,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   }
 
   public onClickUpdate() {
+    this.isLoading = true;
     this.historyService.emitHistoryPointsDebounced();
   }
 }
