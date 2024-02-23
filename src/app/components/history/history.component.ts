@@ -54,6 +54,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
           Update
         </button>
       </div>
+    </div>
+    <div class="canva">
       <app-chart [inputData]="historyPoints" />
     </div>
   `,

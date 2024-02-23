@@ -15,13 +15,13 @@ export class ChartComponent {
   public chartOptions: AgChartOptions = {
     data: [],
     series: [{ type: 'line', xKey: 'xKey', yKey: 'value' }],
+    background: {
+      fill: '#e0f2fe',
+    },
   };
 
   @Input()
   set inputData(data: HistoryPoint[]) {
-    this.chartOptions = {
-      data,
-      series: [{ type: 'line', xKey: 'xKey', yKey: 'value' }],
-    };
+    this.chartOptions = { ...this.chartOptions, data };
   }
 }
