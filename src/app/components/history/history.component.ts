@@ -27,7 +27,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         />
         <ion-icon
           name="arrow-forward-sharp"
-          class="text-xl text-ACCENT"
+          class="text-xl text-ACCENT animate-bounce-lr"
         ></ion-icon>
         <app-currency-selector
           [isBase]="false"

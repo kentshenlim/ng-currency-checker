@@ -21,3 +21,21 @@
     @apply px-3 py-2 mb-6 rounded-lg bg-CANVA;
   }
 }
+
+@layer utilities {
+  .animate-bounce-lr {
+    animation: bounce-left-right 1s infinite;
+  }
+}
+
+@keyframes bounce-left-right {
+  0%,
+  100% {
+    transform: translateX(-50%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateX(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
