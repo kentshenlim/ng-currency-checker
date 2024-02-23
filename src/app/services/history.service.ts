@@ -19,6 +19,10 @@ export class HistoryService {
   private historyPoints: HistoryPoint[] = [];
   private completeCount = 0; // Number of history points calculated completely
   private historyPointsEmit = new Subject<HistoryPoint[]>();
+  public emitHistoryPointsDebounced = debounce(
+    this.emitHistoryPoints.bind(this),
+    this.DEBOUNCE_TIME_MS
+  );
 
   constructor(
     private historyDateService: HistoryDateService,
@@ -48,7 +52,8 @@ export class HistoryService {
     return this.historyPointsEmit;
   }
 
-  public emitHistoryPoints() {
+  private emitHistoryPoints() {
+    // Debounce this
     this.completeCount = 0; // Reset to 0
     for (let i = 0; i < this.dateStrings.length; i++) {
       this.fetchHistoryPoint(this.dateStrings[i], i);
@@ -60,10 +65,10 @@ export class HistoryService {
     console.log('Very expensive');
     const baseUrl = 'https://api.freecurrencyapi.com/v1/historical';
     let httpParams = new HttpParams();
-    httpParams = httpParams.append('apiKey', this.API_KEY);
-    httpParams.append('base_currency', this.baseCurrency);
-    httpParams.append('currencies', this.targetCurrency);
-    httpParams.append('date', dateString);
+    httpParams = httpParams.append('apikey', this.API_KEY);
+    httpParams = httpParams.append('base_currency', this.baseCurrency);
+    httpParams = httpParams.append('currencies', this.targetCurrency);
+    httpParams = httpParams.append('date', dateString);
     this.httpClient
       .get<{ data: { [date: string]: { [currency: string]: number } } }>(
         baseUrl,
