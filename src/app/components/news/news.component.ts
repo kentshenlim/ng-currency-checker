@@ -4,12 +4,23 @@ import { Subscription } from 'rxjs';
 import { News } from '../../interfaces/news';
 import { PalletComponent } from './pallet/pallet.component';
 import { ButtonWithLoadingComponent } from '../_common-ui/button-with-loading/button-with-loading.component';
+import { CountrySelectorComponent } from '../_common-ui/country-selector/country-selector.component';
 
 @Component({
   selector: 'app-news',
   standalone: true,
-  imports: [PalletComponent, ButtonWithLoadingComponent],
+  imports: [
+    PalletComponent,
+    ButtonWithLoadingComponent,
+    CountrySelectorComponent,
+  ],
   template: `
+    <div class="canva">
+      <app-country-selector
+        [countryForNews]="countryCode"
+        (countryForNewsChanged)="onCountryForNewsChanged($event)"
+      />
+    </div>
     @for (news of newsArr; track news.uuid) {
     <div class="canva">
       <app-pallet [news]="news" />
@@ -52,5 +63,9 @@ export class NewsComponent implements OnInit, OnDestroy {
   onClickFetch() {
     this.isLoading = true;
     this.newsService.fetchNewsPage();
+  }
+
+  onCountryForNewsChanged(codeNew: string) {
+    this.newsService.setCountryCode(codeNew);
   }
 }
