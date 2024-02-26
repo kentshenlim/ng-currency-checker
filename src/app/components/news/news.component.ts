@@ -34,6 +34,7 @@ import { CountrySelectorComponent } from '../_common-ui/country-selector/country
       <app-button-with-loading
         [clickCallback]="onClickFetch.bind(this)"
         [isLoading]="isLoading"
+        [text]="getButtonText()"
       />
     </div>
   `,
@@ -70,5 +71,11 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   onCountryForNewsChanged(codeNew: string) {
     this.newsService.setProposedCountryCode(codeNew);
+  }
+
+  getButtonText() {
+    const pageNumber = this.newsService.getPageNumber();
+    if (pageNumber === 1) return 'Get latest news';
+    return 'Load more';
   }
 }

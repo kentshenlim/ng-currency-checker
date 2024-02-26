@@ -76,6 +76,10 @@ export class NewsService {
     return this.newsSubject;
   }
 
+  getPageNumber() {
+    return this.pageNumber;
+  }
+
   fetchNewsPage() {
     // Throttle this
     if (this.countryCode !== this.proposedCountryCode) {

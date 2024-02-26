@@ -14,7 +14,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
       [disabled]="isLoading"
     >
       @if (!isLoading) {
-      <p>Update</p>
+      <p>{{ text }}</p>
       } @else {
       <ion-icon name="cog-sharp" class="animate-spin text-lg text-ACCENT"
         >Update</ion-icon
@@ -27,4 +27,5 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 export class ButtonWithLoadingComponent {
   @Input() clickCallback!: Function;
   @Input() isLoading = false;
+  @Input() text = 'Update';
 }

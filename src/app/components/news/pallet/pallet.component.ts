@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { News } from '../../../interfaces/news';
 import { TimeAgoPipe } from '../../../pipes/time-ago.pipe';
 
@@ -19,11 +19,13 @@ import { TimeAgoPipe } from '../../../pipes/time-ago.pipe';
           news.title
         }}</a>
       </h2>
+      @if (news.imageUrl && news.imageUrl.length) {
       <img
         [src]="news.imageUrl"
         alt="Image for news pallet"
         class="mb-5 w-full"
       />
+      }
       <h3 class="line-clamp-[8]">{{ news.description }}</h3>
       <div class="flex justify-between mt-5">
         <p class="text-sm text-gray-700">{{ news.publishDate | timeAgo }}</p>
@@ -37,8 +39,6 @@ import { TimeAgoPipe } from '../../../pipes/time-ago.pipe';
     </div>
   `,
 })
-export class PalletComponent implements OnInit {
+export class PalletComponent {
   @Input() news!: News;
-
-  ngOnInit(): void {}
 }
