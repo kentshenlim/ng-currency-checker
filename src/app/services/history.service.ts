@@ -11,7 +11,7 @@ import { HistoryEmit } from '../interfaces/history-emit';
   providedIn: 'root',
 })
 export class HistoryService {
-  private readonly API_KEY = constants.API_KEY;
+  private readonly API_KEY = constants.API_KEY_FREECURRENCY;
   private readonly DEBOUNCE_TIME_MS = 4000;
 
   private baseCurrency = 'MYR';

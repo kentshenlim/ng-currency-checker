@@ -15,3 +15,4 @@ Three key features: convertor, history, financial news.
 - Detect location
 - Financial news
 - Error page
+- News detail page
