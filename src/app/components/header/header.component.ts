@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
       Currency Converter
     </h1>
     <p class="text-center text-sm">
-      Check live rates, trends and financial news.
+      Check live rates, trends and financial news. Powered by Angular v17.
     </p>
   `,
 })
