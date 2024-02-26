@@ -94,7 +94,6 @@ export class NewsService {
       })
       .subscribe((data) => {
         const newsArray = data.data.map((d) => {
-          console.log(d);
           return {
             uuid: d.uuid,
             source: d.source,

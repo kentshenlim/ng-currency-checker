@@ -18,15 +18,13 @@ import { PalletComponent } from './pallet/pallet.component';
       <p>No news yet</p>
     </div>
     }
-    <div class="canva">
-      <button
-        type="button"
-        (click)="onClickFetch()"
-        class="rounded-lg bg-neutral-200 p-2 mx-auto block"
-      >
-        Load More
-      </button>
-    </div>
+    <button
+      type="button"
+      (click)="onClickFetch()"
+      class="rounded-lg bg-sky-200 text p-2 mx-auto block"
+    >
+      Load More
+    </button>
   `,
 })
 export class NewsComponent implements OnInit, OnDestroy {

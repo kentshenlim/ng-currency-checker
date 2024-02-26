@@ -7,7 +7,6 @@ import { formatDistanceToNow } from 'date-fns';
 })
 export class TimeAgoPipe implements PipeTransform {
   transform(dateStr: string, ...args: unknown[]): string {
-    console.log(dateStr);
     return formatDistanceToNow(dateStr) + ' ago';
   }
 }
