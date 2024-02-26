@@ -26,8 +26,8 @@ import { CountrySelectorComponent } from '../_common-ui/country-selector/country
       <app-pallet [news]="news" />
     </div>
     } @empty {
-    <div>
-      <p>No news yet</p>
+    <div class="mb-4 text-center italic">
+      <p>Oops, no news yet...</p>
     </div>
     }
     <div class="flex justify-center">
