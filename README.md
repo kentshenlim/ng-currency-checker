@@ -14,3 +14,4 @@ Three key features: convertor, history, financial news.
 - Detect location
 - Error page
 - Double click go up to top
+- Responsive design

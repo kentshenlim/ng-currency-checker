@@ -53,3 +53,15 @@
      latest data from the service, updating all of base currency, target
      currency, month or yearly, and history points.
    - Render `chart` by passing history points as input.
+
+## Feature 3: News
+
+1. `pallet`
+
+   - Accept news input.
+   - Independent of service.
+
+2. `news`
+   - Country code, proposed country code and news array are from
+     `news.service` holding single source of truth.
+   - Render `pallet`.
