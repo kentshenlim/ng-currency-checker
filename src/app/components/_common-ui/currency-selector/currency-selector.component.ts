@@ -35,33 +35,28 @@ import { CurrenciesService } from '../../../services/currencies.service';
     </div>
   `,
 })
-// This component must not be dependent on any service apart from currenciesService
 export class CurrencySelectorComponent implements OnInit {
   @Input() isBase = true;
   @Input() selectedCode = 'MYR';
-  public idPrefix: 'Amount' | 'Converted Amount' = 'Amount';
-  public codeArray: string[] = [];
-  @ViewChild('currencySelected') currencySelected!: ElementRef;
   @Output() currencyChanged = new EventEmitter<string>();
+  @ViewChild('currencySelected') currencySelected!: ElementRef;
+  codeArray: string[] = [];
+  idPrefix: 'Amount' | 'Converted Amount' = 'Amount';
 
-  constructor(
-    // Does not depend on inputs, can load directly
-    private currenciesService: CurrenciesService
-  ) {
-    this.codeArray = this.currenciesService.getCodeList();
-  }
+  constructor(private currenciesService: CurrenciesService) {}
 
   ngOnInit(): void {
+    this.codeArray = this.currenciesService.getCodeList();
     this.idPrefix = this.isBase ? 'Amount' : 'Converted Amount';
   }
 
-  public onChangeCurrency() {
+  onChangeCurrency() {
     const newCode = (this.currencySelected.nativeElement as HTMLSelectElement)
       .value;
     this.currencyChanged.emit(newCode);
   }
 
-  public getFlagUrl() {
+  getFlagUrl() {
     const flagCode = this.currenciesService.getFlagCodeFromCode(
       this.selectedCode
     );
