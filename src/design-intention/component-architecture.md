@@ -29,6 +29,15 @@
 
 4. `chart`
 
+   - Take in inputs for base currency, target currency and input data. Whenever
+     any of these inputs changed, update a state variable which is an object.
+   - Cannot render directly by inserting the value into the object in the view.
+     Whenever there is change in input, the object reference will not be changed
+     although its value changed, then rerendering will not be triggered.
+     Therefore, must define a reference variable, then change the object pointed
+     to it every time there is a change in input. This is achieved with `set`
+     keyword: `@Input() set varName(data: string)`.
+
 5. `history`
    - Base currency, target currency, monthly or yearly, history points are all
      fetched from `history.service` containing single source of truth.

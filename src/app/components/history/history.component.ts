@@ -64,9 +64,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     </div>
     <div class="canva" [class.animate-pulse]="isLoading">
       <app-chart
-        [inputData]="historyPoints"
         [baseCurrency]="baseCurrency"
         [targetCurrency]="targetCurrency"
+        [inputData]="historyPoints"
       />
     </div>
   `,
