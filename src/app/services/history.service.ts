@@ -5,6 +5,7 @@ import debounce from '../utils/debounce';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HistoryDateService } from './history-date.service';
 import { Subject } from 'rxjs';
+import { HistoryEmit } from '../interfaces/history-emit';
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +20,7 @@ export class HistoryService {
   private historyPoints: HistoryPoint[] = [];
   private completeCount = 0; // Number of history points calculated completely
   private isMonthly = true;
-  private historyDataSubject = new Subject<{
-    baseCurrency: string;
-    targetCurrency: string;
-    isMonthly: boolean;
-    historyPoints: HistoryPoint[];
-  }>();
+  private historyDataSubject = new Subject<HistoryEmit>();
   public emitHistoryPointsDebounced = debounce(
     this.emitHistoryPoints.bind(this),
     this.DEBOUNCE_TIME_MS
@@ -38,49 +34,40 @@ export class HistoryService {
     this.historyPoints = [];
   }
 
-  public getBaseCurrency() {
+  getBaseCurrency() {
     return this.baseCurrency;
   }
 
-  public setBaseCurrency(newCurrency: string) {
+  setBaseCurrency(newCurrency: string) {
     this.baseCurrency = newCurrency;
     this.emitCurrentData();
   }
 
-  public getTargetCurrency() {
+  getTargetCurrency() {
     return this.targetCurrency;
   }
 
-  public setTargetCurrency(newCurrency: string) {
+  setTargetCurrency(newCurrency: string) {
     this.targetCurrency = newCurrency;
     this.emitCurrentData();
   }
 
-  public getIsMonthly() {
+  getIsMonthly() {
     return this.isMonthly;
   }
 
-  public setIsMonthly(isMonthly: boolean) {
+  setIsMonthly(isMonthly: boolean) {
     this.isMonthly = isMonthly;
     this.dateStrings = this.historyDateService.getDateStrings(this.isMonthly);
     this.emitCurrentData();
   }
 
-  public getHistoryPoints() {
+  getHistoryPoints() {
     return this.historyPoints;
   }
 
-  public getHistoryDataSubject() {
+  getHistoryDataSubject() {
     return this.historyDataSubject;
-  }
-
-  private emitCurrentData() {
-    this.historyDataSubject.next({
-      baseCurrency: this.baseCurrency,
-      targetCurrency: this.targetCurrency,
-      isMonthly: this.isMonthly,
-      historyPoints: this.historyPoints,
-    });
   }
 
   private emitHistoryPoints() {
@@ -119,5 +106,14 @@ export class HistoryService {
           // If all points ready
           this.emitCurrentData();
       });
+  }
+
+  private emitCurrentData() {
+    this.historyDataSubject.next({
+      baseCurrency: this.baseCurrency,
+      targetCurrency: this.targetCurrency,
+      isMonthly: this.isMonthly,
+      historyPoints: this.historyPoints,
+    });
   }
 }

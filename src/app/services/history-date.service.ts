@@ -19,7 +19,7 @@ export class HistoryDateService {
     'Dec',
   ];
 
-  public getDateStrings(isMonthly: boolean) {
+  getDateStrings(isMonthly: boolean) {
     const dateStrings: string[] = [];
     let date = new Date();
     date.setDate(15);
@@ -32,12 +32,12 @@ export class HistoryDateService {
     return dateStrings;
   }
 
-  public dateStringToMonthString(dStr: string) {
+  dateStringToMonthString(dStr: string) {
     const monthIdx = new Date(dStr).getMonth();
     return this.monthMap[monthIdx];
   }
 
-  public dateStringToYearString(dStr: string) {
+  dateStringToYearString(dStr: string) {
     return new Date(dStr).getFullYear().toString();
   }
 

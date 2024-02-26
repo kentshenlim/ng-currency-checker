@@ -9,11 +9,11 @@ export class ScrollingService {
 
   constructor() {}
 
-  public getScrollSubject() {
+  getScrollSubject() {
     return this.scrollSubject;
   }
 
-  public scrollToBottom() {
+  scrollToBottom() {
     this.scrollSubject.next();
   }
 }

@@ -76,15 +76,15 @@ export class CurrenciesService {
     ZAR: 'ZA',
   };
 
-  public getFullNameFromCode(name: string): string {
+  getFullNameFromCode(name: string): string {
     return this.codeToNameMap[name];
   }
 
-  public getFlagCodeFromCode(code: string): string {
+  getFlagCodeFromCode(code: string): string {
     return this.codeToFlagCode[code];
   }
 
-  public getCodeList() {
+  getCodeList() {
     return Object.keys(this.codeToNameMap).sort(); // Alphabetically
   }
 }
