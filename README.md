@@ -8,7 +8,6 @@ Angular, [Freecurrency API](https://freecurrencyapi.com/), AG grid,
 
 Three key features: convertor, history, financial news.
 
-- Favicon
 - Last converted (local storage)
 - Last view history
 - Detect location

@@ -8,21 +8,21 @@ export const routes: Routes = [
   {
     component: ConverterFormComponent,
     path: '',
-    title: 'CC | Calculator',
+    title: 'CurrencyMaster | Convert',
   },
   {
     component: HistoryComponent,
     path: 'trend',
-    title: 'CC | Trend',
+    title: 'CurrencyMaster | Trend',
   },
   {
     component: NewsComponent,
     path: 'news',
-    title: 'CC | News',
+    title: 'CurrencyMaster | News',
   },
   {
     component: ErrorComponent,
     path: '**',
-    title: 'CC | NOT FOUND',
+    title: 'CurrencyMaster | NOT FOUND',
   },
 ];
