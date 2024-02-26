@@ -6,11 +6,15 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
     <h1 class="font-bold text-2xl mb-2 text-center text-ACCENT">
-      Currency Converter
+      {{ titleText }}
     </h1>
     <p class="text-center text-sm">
-      Check live rates, trends and financial news. Powered by Angular v17.
+      {{ description }}
     </p>
   `,
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  titleText = 'Currency Master';
+  description =
+    'Check live rates, trends and financial news. Powered by Angular v17.';
+}
