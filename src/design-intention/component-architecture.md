@@ -20,8 +20,21 @@
      the service at `ngOnInit`.
 
 3. `converter-form`
+
    - Will render two instances of `converter-form-panel`, one for base currency
      and amount, the other for target currency and amount.
-   - Will fetch conversion rate from `converter-service` to be display.
+   - Will fetch conversion rate from `converter.service` to be display.
    - Allows swapping of base and target currency. This will ask
-     `converter-service` to update.
+     `converter.service` to update.
+
+4. `chart`
+
+5. `history`
+   - Base currency, target currency, monthly or yearly, history points are all
+     fetched from `history.service` containing single source of truth.
+   - Base currency and target currency updated through rendered
+     `currency-selector`; need to listen to event of these.
+   - When update is clicked, the service will update; the component will fetch
+     latest data from the service, updating all of base currency, target
+     currency, month or yearly, and history points.
+   - Render `chart` by passing history points as input.

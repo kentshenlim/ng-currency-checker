@@ -19,7 +19,12 @@ export class HistoryService {
   private historyPoints: HistoryPoint[] = [];
   private completeCount = 0; // Number of history points calculated completely
   private isMonthly = true;
-  private historyPointsEmit = new Subject<HistoryPoint[]>();
+  private historyDataSubject = new Subject<{
+    baseCurrency: string;
+    targetCurrency: string;
+    isMonthly: boolean;
+    historyPoints: HistoryPoint[];
+  }>();
   public emitHistoryPointsDebounced = debounce(
     this.emitHistoryPoints.bind(this),
     this.DEBOUNCE_TIME_MS
@@ -39,6 +44,7 @@ export class HistoryService {
 
   public setBaseCurrency(newCurrency: string) {
     this.baseCurrency = newCurrency;
+    this.emitCurrentData();
   }
 
   public getTargetCurrency() {
@@ -47,10 +53,7 @@ export class HistoryService {
 
   public setTargetCurrency(newCurrency: string) {
     this.targetCurrency = newCurrency;
-  }
-
-  public getHistoryPointsSubject() {
-    return this.historyPointsEmit;
+    this.emitCurrentData();
   }
 
   public getIsMonthly() {
@@ -60,10 +63,24 @@ export class HistoryService {
   public setIsMonthly(isMonthly: boolean) {
     this.isMonthly = isMonthly;
     this.dateStrings = this.historyDateService.getDateStrings(this.isMonthly);
+    this.emitCurrentData();
   }
 
   public getHistoryPoints() {
     return this.historyPoints;
+  }
+
+  public getHistoryDataSubject() {
+    return this.historyDataSubject;
+  }
+
+  private emitCurrentData() {
+    this.historyDataSubject.next({
+      baseCurrency: this.baseCurrency,
+      targetCurrency: this.targetCurrency,
+      isMonthly: this.isMonthly,
+      historyPoints: this.historyPoints,
+    });
   }
 
   private emitHistoryPoints() {
@@ -100,7 +117,7 @@ export class HistoryService {
         this.completeCount++;
         if (this.completeCount === this.dateStrings.length)
           // If all points ready
-          this.historyPointsEmit.next(this.historyPoints);
+          this.emitCurrentData();
       });
   }
 }

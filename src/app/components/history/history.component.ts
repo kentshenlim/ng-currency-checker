@@ -72,54 +72,51 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   `,
 })
 export class HistoryComponent implements OnInit, OnDestroy {
-  public baseCurrency = 'MYR';
-  public targetCurrency = 'MYR';
-  public historyPoints: HistoryPoint[] = [];
-  private historyEmitSubject!: Subscription;
-  public isMonthly = true;
-  public isLoading = false;
+  baseCurrency = 'MYR';
+  targetCurrency = 'MYR';
+  isMonthly = true;
   @ViewChild('isMonthlyInput') isMonthlyInput!: ElementRef;
+  historyPoints: HistoryPoint[] = [];
+  private historySubscription!: Subscription;
+  isLoading = false;
 
-  constructor(private historyService: HistoryService) {
+  constructor(private historyService: HistoryService) {}
+
+  ngOnInit(): void {
     this.baseCurrency = this.historyService.getBaseCurrency();
     this.targetCurrency = this.historyService.getTargetCurrency();
     this.isMonthly = this.historyService.getIsMonthly();
     this.historyPoints = this.historyService.getHistoryPoints();
-  }
-
-  ngOnInit(): void {
-    this.historyEmitSubject = this.historyService
-      .getHistoryPointsSubject()
+    this.historySubscription = this.historyService
+      .getHistoryDataSubject()
       .subscribe((data) => {
-        this.historyPoints = data;
+        this.baseCurrency = data.baseCurrency;
+        this.targetCurrency = data.targetCurrency;
+        this.isMonthly = data.isMonthly;
+        this.historyPoints = data.historyPoints;
         this.isLoading = false;
-        console.log(this.baseCurrency, this.targetCurrency);
       });
   }
 
   ngOnDestroy(): void {
-    this.historyEmitSubject.unsubscribe();
+    this.historySubscription.unsubscribe();
   }
 
-  public onBaseCurrencyChanged(newCurrency: string) {
+  onBaseCurrencyChanged(newCurrency: string) {
     this.historyService.setBaseCurrency(newCurrency);
-    this.baseCurrency = newCurrency;
-    // History Service will not emit on currency change
-    // So have to update manually so flag will update
   }
 
-  public onTargetCurrencyChanged(newCurrency: string) {
+  onTargetCurrencyChanged(newCurrency: string) {
     this.historyService.setTargetCurrency(newCurrency);
-    this.targetCurrency = newCurrency;
   }
 
-  public onIsMonthlyChanged() {
+  onIsMonthlyChanged() {
     const valString = (this.isMonthlyInput.nativeElement as HTMLSelectElement)
       .value;
     this.historyService.setIsMonthly(valString === 'monthly');
   }
 
-  public onClickUpdate() {
+  onClickUpdate() {
     this.isLoading = true;
     this.historyService.emitHistoryPointsDebounced();
   }
