@@ -4,11 +4,13 @@ import constants from '../constants';
 import { News } from '../interfaces/news';
 import { Subject } from 'rxjs';
 import { NewsEmit } from '../interfaces/news-emit';
+import throttle from '../utils/throttle';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewsService {
+  private readonly THROTTLE_TIME_MS = 500;
   private readonly API_KEY = constants.API_KEY_MARKETAUX;
 
   private countryCode = 'my'; // Current news
@@ -53,6 +55,7 @@ export class NewsService {
     // },
   ];
   private newsSubject = new Subject<NewsEmit>();
+  fetchNewsPageThrottled = throttle(this.fetchNewsPage.bind(this), 500);
 
   constructor(private httpClient: HttpClient) {}
 
@@ -80,7 +83,7 @@ export class NewsService {
     return this.pageNumber;
   }
 
-  fetchNewsPage() {
+  private fetchNewsPage() {
     // Throttle this
     if (this.countryCode !== this.proposedCountryCode) {
       this.newsCollected = []; // Clear if country has changed

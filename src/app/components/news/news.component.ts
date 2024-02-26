@@ -66,7 +66,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   onClickFetch() {
     this.isLoading = true;
-    this.newsService.fetchNewsPage();
+    this.newsService.fetchNewsPageThrottled();
   }
 
   onCountryForNewsChanged(codeNew: string) {

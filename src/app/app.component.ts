@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs';
       <section class="px-3 bg-sky-200/30 pt-3 pb-2">
         <app-header />
       </section>
-      <section class="py-5 h-1 mt-4 flex-grow px-3 overflow-y-auto" #mainCanva>
+      <section class="py-5 h-1 flex-grow px-3 overflow-y-auto" #mainCanva>
         <router-outlet></router-outlet>
       </section>
       <section>
