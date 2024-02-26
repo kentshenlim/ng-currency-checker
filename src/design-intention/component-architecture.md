@@ -9,6 +9,7 @@
    - Source of truth remains single in service
 
 2. `converter-form-panel`
+
    - Will render `currency-selector` as child.
    - Will depend on `converter.service`.
    - For currency selected, listen for `currency-selector` event, then ask
@@ -17,3 +18,10 @@
    - Both currency and amount should be kept in `currency-selector` as single
      source of truth. This means the component must fetch the two values from
      the service at `ngOnInit`.
+
+3. `converter-form`
+   - Will render two instances of `converter-form-panel`, one for base currency
+     and amount, the other for target currency and amount.
+   - Will fetch conversion rate from `converter-service` to be display.
+   - Allows swapping of base and target currency. This will ask
+     `converter-service` to update.

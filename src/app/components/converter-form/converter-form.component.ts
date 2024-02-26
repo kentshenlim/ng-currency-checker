@@ -31,7 +31,7 @@ import { Subscription } from 'rxjs';
       <div class="text-sm mb-2">Indicative Exchange Rate</div>
       <p class="text-sm font-medium">
         1 <span> {{ getBaseCurrencyName() }}</span> =
-        <span>{{ getConversionRate() | number : '1.0-4' }}</span
+        <span>{{ conversionRate | number : '1.0-4' }}</span
         >&nbsp;
         <span>{{ getTargetCurrencyName() }}</span>
       </p>
@@ -39,19 +39,16 @@ import { Subscription } from 'rxjs';
   `,
 })
 export class ConverterFormComponent implements OnInit, OnDestroy {
-  private conversionRate = 1;
+  conversionRate = 1;
   private conversionSub!: Subscription;
 
   constructor(
-    // Does not depends on input, can load directly
     private converterService: ConverterService,
     private currenciesService: CurrenciesService
-  ) {
-    this.conversionRate = this.converterService.getConversionRate();
-  }
+  ) {}
 
   ngOnInit(): void {
-    // Depends on input
+    this.conversionRate = this.converterService.getConversionRate();
     this.conversionSub = this.converterService
       .getEmitSubject()
       .subscribe(({ conversionRate }) => {
@@ -63,21 +60,17 @@ export class ConverterFormComponent implements OnInit, OnDestroy {
     this.conversionSub.unsubscribe();
   }
 
-  public onClickSwap() {
+  onClickSwap() {
     this.converterService.swapCurrencyAndAmount();
   }
 
-  public getConversionRate() {
-    return this.conversionRate;
-  }
-
-  public getBaseCurrencyName() {
+  getBaseCurrencyName() {
     return this.currenciesService.getFullNameFromCode(
       this.converterService.getBaseCurrency()
     );
   }
 
-  public getTargetCurrencyName() {
+  getTargetCurrencyName() {
     return this.currenciesService.getFullNameFromCode(
       this.converterService.getTargetCurrency()
     );
