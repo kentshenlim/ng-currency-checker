@@ -11,11 +11,16 @@ import { CurrencySelectorComponent } from '../_common-ui/currency-selector/curre
 import { HistoryPoint } from '../../interfaces/history-point';
 import { Subscription } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ButtonWithLoadingComponent } from '../_common-ui/button-with-loading/button-with-loading.component';
 
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [CurrencySelectorComponent, ChartComponent],
+  imports: [
+    CurrencySelectorComponent,
+    ButtonWithLoadingComponent,
+    ChartComponent,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="canva">
@@ -46,20 +51,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
           <option value="monthly" [selected]="isMonthly">Monthly</option>
           <option value="yearly" [selected]="!isMonthly">Yearly</option>
         </select>
-        <button
-          type="button"
-          (click)="onClickUpdate()"
-          class="rounded-lg bg-neutral-200 p-2 flex items-center"
-          [disabled]="isLoading"
-        >
-          @if (!isLoading) {
-          <p>Update</p>
-          } @else {
-          <ion-icon name="cog-sharp" class="animate-spin text-lg text-ACCENT"
-            >Update</ion-icon
-          >
-          }
-        </button>
+        <app-button-with-loading
+          [clickCallback]="onClickUpdate.bind(this)"
+          [isLoading]="isLoading"
+        />
       </div>
     </div>
     <div class="canva" [class.animate-pulse]="isLoading">

@@ -31,6 +31,7 @@ export class NewsComponent implements OnInit, OnDestroy {
   countryCode = 'my';
   newsArr: News[] = [];
   private newsSub!: Subscription;
+  public isLoading = false;
 
   constructor(private newsService: NewsService) {}
 
@@ -40,6 +41,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.newsSub = this.newsService.getNewsSubject().subscribe((data) => {
       this.countryCode = data.countryCode;
       this.newsArr = data.news;
+      this.isLoading = false;
     });
   }
 
@@ -48,6 +50,7 @@ export class NewsComponent implements OnInit, OnDestroy {
   }
 
   onClickFetch() {
+    this.isLoading = true;
     this.newsService.fetchNewsPage();
   }
 }
