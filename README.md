@@ -11,6 +11,5 @@ Three key features: convertor, history, financial news.
 - Last converted (local storage)
 - Last view history
 - Detect location
-- Error page
 - Double click go up to top
 - Responsive design
