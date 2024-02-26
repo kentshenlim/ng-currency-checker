@@ -6,10 +6,22 @@ import { News } from '../../../interfaces/news';
   standalone: true,
   imports: [],
   template: `
-    <div>
-      <p>{{ news.source }}</p>
-      <h2>{{ news.title }}</h2>
-      <h3>{{ news.description }}</h3>
+    <div class="flex flex-col">
+      <a
+        [href]="'https://' + news.source"
+        class="text-sm text-blue-400 mb-2 block"
+        >{{ news.source }}</a
+      >
+      <h2 class="font-semibold text-2xl mb-3">{{ news.title }}</h2>
+      <img
+        [src]="news.image_url"
+        alt="Image for news pallet"
+        class="mb-5 w-full"
+      />
+      <h3 class="text-lg line-clamp-[8]">{{ news.description }}</h3>
+      <a [href]="news.url" class="text-blue-400 underline inline-block self-end"
+        >Read More</a
+      >
       <p>{{ news.publishDate }}</p>
     </div>
   `,
