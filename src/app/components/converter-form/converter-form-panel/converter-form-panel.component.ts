@@ -41,30 +41,24 @@ import { Subscription } from 'rxjs';
 })
 export class ConverterFormPanelComponent implements OnInit, OnDestroy {
   private readonly MAX_AMOUNT = Number.MAX_SAFE_INTEGER / 100_000;
-
-  // The binding part could have been done with reactive form but okay
   @Input() isBase = true;
-  public selectedAmount = 0;
-  public headerText: 'Amount' | 'Converted Amount' = 'Amount';
-  public idPrefix: 'base' | 'target' = 'base';
-  public isAmountMutable: boolean = true;
-  public selectedCode: string = 'MYR';
+  selectedAmount = 0;
+  @ViewChild('amountSelected') amountSelected!: ElementRef;
+  selectedCode = 'MYR';
+  headerText: 'Amount' | 'Converted Amount' = 'Amount';
+  idPrefix: 'base' | 'target' = 'base';
+  isAmountMutable = true;
   private currencySub!: Subscription;
   private amountSub!: Subscription;
-  @ViewChild('amountSelected') amountSelected!: ElementRef;
 
-  constructor(
-    // Does not depend on inputs, can load directly
-    private converterService: ConverterService
-  ) {}
+  constructor(private converterService: ConverterService) {}
 
   ngOnInit(): void {
-    // Depends on inputs
     if (this.isBase) {
-      this.selectedAmount = this.converterService.getBaseAmount();
+      this.selectedAmount = this.converterService.getBaseAmount(); // Amount kept as single source of truth in converter service
+      this.selectedCode = this.converterService.getBaseCurrency(); // Selected currency kept as single source of truth in converter service
       this.headerText = 'Amount';
       this.idPrefix = 'base';
-      this.selectedCode = this.converterService.getBaseCurrency();
       this.currencySub = this.converterService
         .getEmitSubject()
         .subscribe(({ baseCurrency }) => {
@@ -77,9 +71,9 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
         });
     } else {
       this.selectedAmount = this.converterService.getConvertedAmount();
+      this.selectedCode = this.converterService.getTargetCurrency();
       this.headerText = 'Converted Amount';
       this.idPrefix = 'target';
-      this.selectedCode = this.converterService.getTargetCurrency();
       this.currencySub = this.converterService
         .getEmitSubject()
         .subscribe(({ targetCurrency }) => {
@@ -99,7 +93,7 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
     this.amountSub.unsubscribe();
   }
 
-  public onChangeAmount() {
+  onChangeAmount() {
     if (!this.isAmountMutable) return;
     const amountInput = this.amountSelected.nativeElement as HTMLInputElement;
     let amountNew = +amountInput.value;
@@ -111,7 +105,7 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
     this.converterService.setBaseAmount(amountNew);
   }
 
-  public onCurrencyChanged(codeNew: string) {
+  onCurrencyChanged(codeNew: string) {
     if (this.isBase) this.converterService.setBaseCurrency(codeNew);
     else this.converterService.setTargetCurrency(codeNew);
   }
