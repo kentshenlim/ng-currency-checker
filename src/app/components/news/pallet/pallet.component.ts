@@ -12,7 +12,9 @@ import { News } from '../../../interfaces/news';
         class="text-sm text-blue-400 mb-2 block"
         >{{ news.source }}</a
       >
-      <h2 class="font-semibold text-2xl mb-3">{{ news.title }}</h2>
+      <h2 class="font-semibold text-2xl mb-3">
+        <a [href]="news.url" class="hover:underline">{{ news.title }}</a>
+      </h2>
       <img
         [src]="news.image_url"
         alt="Image for news pallet"
