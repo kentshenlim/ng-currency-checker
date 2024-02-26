@@ -3,11 +3,12 @@ import { NewsService } from '../../services/news.service';
 import { Subscription } from 'rxjs';
 import { News } from '../../interfaces/news';
 import { PalletComponent } from './pallet/pallet.component';
+import { ButtonWithLoadingComponent } from '../_common-ui/button-with-loading/button-with-loading.component';
 
 @Component({
   selector: 'app-news',
   standalone: true,
-  imports: [PalletComponent],
+  imports: [PalletComponent, ButtonWithLoadingComponent],
   template: `
     @for (news of newsArr; track news.uuid) {
     <div class="canva">
@@ -18,13 +19,12 @@ import { PalletComponent } from './pallet/pallet.component';
       <p>No news yet</p>
     </div>
     }
-    <button
-      type="button"
-      (click)="onClickFetch()"
-      class="rounded-lg bg-sky-200 text p-2 mx-auto block"
-    >
-      Load More
-    </button>
+    <div class="flex justify-center">
+      <app-button-with-loading
+        [clickCallback]="onClickFetch.bind(this)"
+        [isLoading]="isLoading"
+      />
+    </div>
   `,
 })
 export class NewsComponent implements OnInit, OnDestroy {
