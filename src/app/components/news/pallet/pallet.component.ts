@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { News } from '../../../interfaces/news';
+import { TimeAgoPipe } from '../../../pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-pallet',
   standalone: true,
-  imports: [],
+  imports: [TimeAgoPipe],
   template: `
     <div class="flex flex-col">
       <a
@@ -16,7 +17,7 @@ import { News } from '../../../interfaces/news';
         <a [href]="news.url" class="hover:underline">{{ news.title }}</a>
       </h2>
       <img
-        [src]="news.image_url"
+        [src]="news.imageUrl"
         alt="Image for news pallet"
         class="mb-5 w-full"
       />
@@ -24,7 +25,7 @@ import { News } from '../../../interfaces/news';
       <a [href]="news.url" class="text-blue-400 underline inline-block self-end"
         >Read More</a
       >
-      <p>{{ news.publishDate }}</p>
+      <p>{{ news.publishDate | timeAgo }}</p>
     </div>
   `,
 })

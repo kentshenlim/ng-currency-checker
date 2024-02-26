@@ -1,10 +1,9 @@
 export interface News {
-  description: string;
-  image_url: string;
-  publishDate: string;
-  snippet: string;
+  uuid: string;
   source: string;
   title: string;
+  imageUrl: string;
+  description: string;
+  publishDate: string;
   url: string;
-  uuid: string;
 }
