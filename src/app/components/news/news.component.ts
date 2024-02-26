@@ -11,7 +11,7 @@ import { PalletComponent } from './pallet/pallet.component';
   template: `
     @for (news of newsArr; track news.uuid) {
     <div class="canva">
-      <app-pallet />
+      <app-pallet [news]="news" />
     </div>
     } @empty {
     <div>
