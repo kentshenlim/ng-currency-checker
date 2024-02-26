@@ -1,3 +1,7 @@
+# Component Architecture
+
+## Feature 1: Convert
+
 1. `currency-selector`
 
    - Will be used by more than one feature: "Convert" and "Trend", so must not
@@ -27,7 +31,9 @@
    - Allows swapping of base and target currency. This will ask
      `converter.service` to update.
 
-4. `chart`
+## Feature 2: Tend
+
+1. `chart`
 
    - Take in inputs for base currency, target currency and input data. Whenever
      any of these inputs changed, update a state variable which is an object.
@@ -38,7 +44,7 @@
      to it every time there is a change in input. This is achieved with `set`
      keyword: `@Input() set varName(data: string)`.
 
-5. `history`
+2. `history`
    - Base currency, target currency, monthly or yearly, history points are all
      fetched from `history.service` containing single source of truth.
    - Base currency and target currency updated through rendered

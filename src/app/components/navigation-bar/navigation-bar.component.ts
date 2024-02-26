@@ -38,6 +38,4 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     </nav>
   `,
 })
-export class NavigationBarComponent {
-  private activeStr: 'Convert' | 'Trend' | 'News' = 'Convert';
-}
+export class NavigationBarComponent {}
