@@ -17,7 +17,7 @@ import { CountrySelectorComponent } from '../_common-ui/country-selector/country
   template: `
     <div class="canva">
       <app-country-selector
-        [countryForNews]="countryCode"
+        [countryForNews]="proposedCountryCode"
         (countryForNewsChanged)="onCountryForNewsChanged($event)"
       />
     </div>
@@ -40,6 +40,7 @@ import { CountrySelectorComponent } from '../_common-ui/country-selector/country
 })
 export class NewsComponent implements OnInit, OnDestroy {
   countryCode = 'my';
+  proposedCountryCode = 'my';
   newsArr: News[] = [];
   private newsSub!: Subscription;
   public isLoading = false;
@@ -48,9 +49,11 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.countryCode = this.newsService.getCountryCode();
+    this.proposedCountryCode = this.newsService.getProposedCountryCode();
     this.newsArr = this.newsService.getNewsCollected();
     this.newsSub = this.newsService.getNewsSubject().subscribe((data) => {
       this.countryCode = data.countryCode;
+      this.proposedCountryCode = data.proposedCountryCode;
       this.newsArr = data.news;
       this.isLoading = false;
     });
@@ -66,6 +69,6 @@ export class NewsComponent implements OnInit, OnDestroy {
   }
 
   onCountryForNewsChanged(codeNew: string) {
-    this.newsService.setCountryCode(codeNew);
+    this.newsService.setProposedCountryCode(codeNew);
   }
 }

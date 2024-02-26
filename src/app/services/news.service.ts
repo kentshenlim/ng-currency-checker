@@ -11,7 +11,8 @@ import { NewsEmit } from '../interfaces/news-emit';
 export class NewsService {
   private readonly API_KEY = constants.API_KEY_MARKETAUX;
 
-  private countryCode = 'my';
+  private countryCode = 'my'; // Current news
+  private proposedCountryCode = 'my'; // Next round
   private pageNumber = 1;
   private newsCollected: News[] = [
     // {
@@ -59,8 +60,12 @@ export class NewsService {
     return this.countryCode;
   }
 
-  setCountryCode(countryCodeNew: string) {
-    this.countryCode = countryCodeNew;
+  getProposedCountryCode() {
+    return this.proposedCountryCode;
+  }
+
+  setProposedCountryCode(countryCodeNew: string) {
+    this.proposedCountryCode = countryCodeNew;
   }
 
   getNewsCollected() {
@@ -73,11 +78,16 @@ export class NewsService {
 
   fetchNewsPage() {
     // Throttle this
+    if (this.countryCode !== this.proposedCountryCode) {
+      this.newsCollected = []; // Clear if country has changed
+      this.pageNumber = 1;
+    }
     const baseUrl = 'https://api.marketaux.com/v1/news/all';
     let httpParams = new HttpParams();
     httpParams = httpParams.append('api_token', this.API_KEY);
-    httpParams = httpParams.append('countries', this.countryCode);
+    httpParams = httpParams.append('countries', this.proposedCountryCode);
     httpParams = httpParams.append('page', this.pageNumber);
+    httpParams = httpParams.append('language', 'en');
     this.httpClient
       .get<{
         data: {
@@ -104,6 +114,7 @@ export class NewsService {
             url: d.url,
           };
         });
+        this.countryCode = this.proposedCountryCode;
         this.newsCollected.push(...newsArray);
         this.pageNumber++;
         this.emitCurrentData();
@@ -113,6 +124,7 @@ export class NewsService {
   emitCurrentData() {
     this.newsSubject.next({
       countryCode: this.countryCode,
+      proposedCountryCode: this.proposedCountryCode,
       news: this.newsCollected,
     });
   }
