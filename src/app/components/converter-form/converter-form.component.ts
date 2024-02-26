@@ -50,7 +50,7 @@ export class ConverterFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.conversionRate = this.converterService.getConversionRate();
     this.conversionSub = this.converterService
-      .getEmitSubject()
+      .getConverterSubject()
       .subscribe(({ conversionRate }) => {
         this.conversionRate = conversionRate;
       });

@@ -48,8 +48,7 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
   headerText: 'Amount' | 'Converted Amount' = 'Amount';
   idPrefix: 'base' | 'target' = 'base';
   isAmountMutable = true;
-  private currencySub!: Subscription;
-  private amountSub!: Subscription;
+  private converterSub!: Subscription;
 
   constructor(private converterService: ConverterService) {}
 
@@ -59,38 +58,29 @@ export class ConverterFormPanelComponent implements OnInit, OnDestroy {
       this.selectedCode = this.converterService.getBaseCurrency(); // Selected currency kept as single source of truth in converter service
       this.headerText = 'Amount';
       this.idPrefix = 'base';
-      this.currencySub = this.converterService
-        .getEmitSubject()
-        .subscribe(({ baseCurrency }) => {
+      this.converterSub = this.converterService
+        .getConverterSubject()
+        .subscribe(({ baseCurrency, baseAmount }) => {
           this.selectedCode = baseCurrency;
-        });
-      this.amountSub = this.converterService
-        .getBaseAmountEmitSubject()
-        .subscribe((baseAmountNew) => {
-          this.selectedAmount = baseAmountNew;
+          this.selectedAmount = baseAmount;
         });
     } else {
       this.selectedAmount = this.converterService.getConvertedAmount();
       this.selectedCode = this.converterService.getTargetCurrency();
       this.headerText = 'Converted Amount';
       this.idPrefix = 'target';
-      this.currencySub = this.converterService
-        .getEmitSubject()
-        .subscribe(({ targetCurrency }) => {
+      this.converterSub = this.converterService
+        .getConverterSubject()
+        .subscribe(({ targetCurrency, convertedAmount }) => {
           this.selectedCode = targetCurrency;
-        });
-      this.amountSub = this.converterService
-        .getBaseAmountEmitSubject()
-        .subscribe(() => {
-          this.selectedAmount = this.converterService.getConvertedAmount();
+          this.selectedAmount = convertedAmount;
         });
     }
     this.isAmountMutable = this.isBase;
   }
 
   ngOnDestroy(): void {
-    this.currencySub.unsubscribe();
-    this.amountSub.unsubscribe();
+    this.converterSub.unsubscribe();
   }
 
   onChangeAmount() {

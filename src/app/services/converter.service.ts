@@ -16,73 +16,64 @@ export class ConverterService {
   private targetCurrency = 'MYR';
   private conversionRate = 1;
   private baseAmount = 0;
-  private currencyAndRateEmit = new Subject<ConverterEmit>();
-  private baseAmountEmit = new Subject<number>();
-  // Base amount should not be merged with currency and rate
-  // Change in base amount does not require refetching conversion rate so do not
-  // call emitConversionRate()
-  // Base amount cannot be kept in component as the value will not persist on
-  // component destroy (bad UX)
-  private emitConversionRateDebounced = debounce(
-    this.emitConversionRate.bind(this),
+  private converterSubject = new Subject<ConverterEmit>();
+  private updateConversionRateAndEmitDataDebounced = debounce(
+    this.updateConversionRateAndEmitData.bind(this),
     this.DEBOUNCE_TIME_MS
   );
 
   constructor(private httpClient: HttpClient) {}
 
-  public getBaseCurrency() {
+  getBaseCurrency() {
     return this.baseCurrency;
   }
 
-  public setBaseCurrency(newCurrency: string) {
+  setBaseCurrency(newCurrency: string) {
     this.baseCurrency = newCurrency;
-    this.emitConversionRateDebounced();
+    this.updateConversionRateAndEmitDataDebounced();
   }
 
-  public getTargetCurrency() {
+  getTargetCurrency() {
     return this.targetCurrency;
   }
 
-  public setTargetCurrency(newCurrency: string) {
+  setTargetCurrency(newCurrency: string) {
     this.targetCurrency = newCurrency;
-    this.emitConversionRateDebounced();
+    this.updateConversionRateAndEmitDataDebounced();
   }
 
-  public getBaseAmount() {
+  getBaseAmount() {
     return this.baseAmount;
   }
 
-  public setBaseAmount(newAmount: number) {
+  setBaseAmount(newAmount: number) {
     this.baseAmount = newAmount;
-    this.baseAmountEmit.next(this.baseAmount);
+    this.emitCurrentData(); // No need update conversion rate
   }
 
-  public getConversionRate() {
+  getConversionRate() {
     return this.conversionRate;
   }
 
-  public swapCurrencyAndAmount() {
+  swapCurrencyAndAmount() {
     [this.baseCurrency, this.targetCurrency] = [
       this.targetCurrency,
       this.baseCurrency,
     ];
     this.baseAmount = this.getConvertedAmount();
-    this.emitConversionRateDebounced();
+    this.conversionRate = 1 / this.conversionRate;
+    this.emitCurrentData(); // No need update conversion rate
   }
 
-  public getConvertedAmount() {
+  getConvertedAmount() {
     return Math.round(this.conversionRate * this.baseAmount * 100) / 100;
   }
 
-  public getEmitSubject() {
-    return this.currencyAndRateEmit;
+  getConverterSubject() {
+    return this.converterSubject;
   }
 
-  public getBaseAmountEmitSubject() {
-    return this.baseAmountEmit;
-  }
-
-  private emitConversionRate() {
+  private updateConversionRateAndEmitData() {
     // Don't call this directly, call debounced version
     console.log('expensive');
     const baseUrl = 'https://api.freecurrencyapi.com/v1/latest';
@@ -96,15 +87,17 @@ export class ConverterService {
       })
       .subscribe((val) => {
         this.conversionRate = val.data[this.targetCurrency];
-        this.currencyAndRateEmit.next({
-          baseCurrency: this.baseCurrency,
-          targetCurrency: this.targetCurrency,
-          conversionRate: this.conversionRate,
-        });
-        this.baseAmountEmit.next(this.baseAmount);
-        // Probably bad practice here
-        // Emit conversion rate, but then update base amount
-        // Have to update base amount so that target amount got updated
+        this.emitCurrentData();
       });
+  }
+
+  private emitCurrentData() {
+    this.converterSubject.next({
+      baseCurrency: this.baseCurrency,
+      targetCurrency: this.targetCurrency,
+      conversionRate: this.conversionRate,
+      baseAmount: this.baseAmount,
+      convertedAmount: this.getConvertedAmount(),
+    });
   }
 }
