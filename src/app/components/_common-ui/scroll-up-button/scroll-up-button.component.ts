@@ -9,7 +9,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `<button
     (click)="onClickButton()"
-    class="p-2 rounded-md bg-sky-300/60 font-semibold text-ACCENT flex items-center justify-center"
+    class="p-2 rounded-md bg-sky-300/60 font-semibold text-ACCENT flex items-center justify-center md:hidden"
   >
     <ion-icon name="arrow-up-circle-outline" class="text-3xl"></ion-icon>
   </button>`,

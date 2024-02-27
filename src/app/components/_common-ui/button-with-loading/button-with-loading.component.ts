@@ -14,9 +14,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
       [disabled]="isLoading"
     >
       @if (!isLoading) {
-      <p>{{ text }}</p>
+      <p class="md:text-xl">{{ text }}</p>
       } @else {
-      <ion-icon name="cog-sharp" class="animate-spin text-lg text-ACCENT"
+      <ion-icon
+        name="cog-sharp"
+        class="animate-spin text-ACCENT button-ion-icon"
         >Update</ion-icon
       >
       }

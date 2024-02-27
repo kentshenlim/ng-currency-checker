@@ -11,10 +11,10 @@ import { TimeAgoPipe } from '../../../pipes/time-ago.pipe';
       <a
         [href]="'https://' + news.source"
         target="_blank"
-        class="text-sm text-blue-400 mb-2 block"
+        class="text-sm text-blue-400 mb-2 block md:text-lg"
         >{{ news.source }}</a
       >
-      <h2 class="font-semibold text-2xl mb-3">
+      <h2 class="font-semibold text-xl md:text-3xl mb-3 md:mb-5">
         <a [href]="news.url" target="_blank" class="hover:underline">{{
           news.title
         }}</a>
@@ -23,16 +23,18 @@ import { TimeAgoPipe } from '../../../pipes/time-ago.pipe';
       <img
         [src]="news.imageUrl"
         alt="Image for news pallet"
-        class="mb-5 w-full"
+        class="mb-5 w-full max-w-lg mx-auto md:rounded-xl md:mb-8"
       />
       }
-      <h3 class="line-clamp-[8]">{{ news.description }}</h3>
+      <h3 class="line-clamp-[8] md:text-xl">{{ news.description }}</h3>
       <div class="flex justify-between mt-5">
-        <p class="text-sm text-gray-700">{{ news.publishDate | timeAgo }}</p>
+        <p class="text-sm text-gray-700 md:text-lg first-letter:capitalize">
+          {{ news.publishDate | timeAgo }}
+        </p>
         <a
           [href]="news.url"
           target="_blank"
-          class="text-blue-400 underline inline-block self-end"
+          class="text-blue-400 underline inline-block self-end md:text-lg md:no-underline"
           >Read More &gt;</a
         >
       </div>

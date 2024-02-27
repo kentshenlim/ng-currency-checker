@@ -10,6 +10,7 @@ body {
   .form-input-element {
     @apply border-2 rounded-md outline-none border-sky-100/60 bg-sky-100/60;
     @apply focus:border-sky-200/60 focus:bg-sky-200/60;
+    @apply md:text-xl;
   }
 
   .navbar-centering {

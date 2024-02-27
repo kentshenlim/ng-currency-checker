@@ -17,8 +17,8 @@ import { NewsByCountryService } from '../../../services/news-by-country.service'
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="flex justify-center items-center gap-2">
-      <label for="country-for-news">News</label>
-      <ion-icon name="at-sharp" class="text-xl"></ion-icon>
+      <label for="country-for-news" class="md:text-xl">News</label>
+      <ion-icon name="at-sharp" class="button-ion-icon"></ion-icon>
       <select
         name="country-for-news"
         id="country-for-news"

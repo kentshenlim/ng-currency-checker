@@ -24,7 +24,7 @@ import { CurrenciesService } from '../../../services/currencies.service';
         [id]="idPrefix + 'Currency'"
         (change)="onChangeCurrency()"
         #currencySelected
-        class="form-input-element md:text-xl"
+        class="form-input-element"
       >
         @for (code of codeArray; track code) {
         <option [value]="code" [selected]="selectedCode === code">

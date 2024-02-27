@@ -24,7 +24,9 @@ import { ButtonWithLoadingComponent } from '../_common-ui/button-with-loading/bu
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="canva">
-      <div class="flex justify-between items-center mb-4">
+      <div
+        class="flex justify-between items-center mb-4 max-w-xl mx-auto md:mb-8"
+      >
         <app-currency-selector
           [isBase]="true"
           [selectedCode]="baseCurrency"
@@ -32,7 +34,7 @@ import { ButtonWithLoadingComponent } from '../_common-ui/button-with-loading/bu
         />
         <ion-icon
           name="arrow-forward-sharp"
-          class="text-xl text-ACCENT animate-bounce-lr"
+          class="button-ion-icon text-ACCENT animate-bounce-lr"
         ></ion-icon>
         <app-currency-selector
           [isBase]="false"

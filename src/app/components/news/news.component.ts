@@ -21,15 +21,17 @@ import { CountrySelectorComponent } from '../_common-ui/country-selector/country
         (countryForNewsChanged)="onCountryForNewsChanged($event)"
       />
     </div>
-    @for (news of newsArr; track news.uuid) {
-    <div class="canva">
-      <app-pallet [news]="news" />
+    <div>
+      @for (news of newsArr; track news.uuid) {
+      <div class="canva">
+        <app-pallet [news]="news" />
+      </div>
+      } @empty {
+      <div class="mb-4 text-center italic md:text-lg">
+        <p>Oops, no news yet...</p>
+      </div>
+      }
     </div>
-    } @empty {
-    <div class="mb-4 text-center italic">
-      <p>Oops, no news yet...</p>
-    </div>
-    }
     <div class="flex justify-center">
       <app-button-with-loading
         [clickCallback]="onClickFetch.bind(this)"
