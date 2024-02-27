@@ -14,8 +14,8 @@ export class NewsService {
   private readonly THROTTLE_TIME_MS = 500;
   private readonly API_KEY = constants.API_KEY_MARKETAUX;
 
-  private countryCode = 'my'; // Current news
-  private proposedCountryCode = 'my'; // Next round
+  private countryCode = 'gb'; // Current news
+  private proposedCountryCode = 'gb'; // Next round
   private pageNumber = 1;
   private newsCollected: News[] = [
     // {

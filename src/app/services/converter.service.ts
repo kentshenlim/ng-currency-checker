@@ -13,8 +13,8 @@ export class ConverterService {
   private readonly API_KEY = constants.API_KEY_FREECURRENCY;
   private readonly DEBOUNCE_TIME_MS = 250;
 
-  private baseCurrency = 'MYR';
-  private targetCurrency = 'MYR';
+  private baseCurrency = 'GBP';
+  private targetCurrency = 'GBP';
   private conversionRate = 1;
   private baseAmount = 0;
   private converterSubject = new Subject<ConverterEmit>();

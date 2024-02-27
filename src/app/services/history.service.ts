@@ -15,8 +15,8 @@ export class HistoryService {
   private readonly API_KEY = constants.API_KEY_FREECURRENCY;
   private readonly DEBOUNCE_TIME_MS = 4000;
 
-  private baseCurrency = 'MYR';
-  private targetCurrency = 'MYR';
+  private baseCurrency = 'GBP';
+  private targetCurrency = 'GBP';
   private dateStrings: string[];
   private historyPoints: HistoryPoint[] = [];
   private completeCount = 0; // Number of history points calculated completely
