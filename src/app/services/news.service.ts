@@ -5,6 +5,7 @@ import { News } from '../interfaces/news';
 import { Subject } from 'rxjs';
 import { NewsEmit } from '../interfaces/news-emit';
 import throttle from '../utils/throttle';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -55,9 +56,21 @@ export class NewsService {
     // },
   ];
   private newsSubject = new Subject<NewsEmit>();
-  fetchNewsPageThrottled = throttle(this.fetchNewsPage.bind(this), 500);
+  fetchNewsPageThrottled = throttle(
+    this.fetchNewsPage.bind(this),
+    this.THROTTLE_TIME_MS
+  );
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private localStorageService: LocalStorageService
+  ) {
+    const dataInit = this.localStorageService.getNewsData();
+    if (dataInit) {
+      this.countryCode = dataInit.countryCode;
+      this.proposedCountryCode = dataInit.countryCode;
+    }
+  }
 
   getCountryCode() {
     return this.countryCode;
@@ -69,6 +82,7 @@ export class NewsService {
 
   setProposedCountryCode(countryCodeNew: string) {
     this.proposedCountryCode = countryCodeNew;
+    this.saveDataToLocalStorage();
   }
 
   getNewsCollected() {
@@ -133,6 +147,12 @@ export class NewsService {
       countryCode: this.countryCode,
       proposedCountryCode: this.proposedCountryCode,
       news: this.newsCollected,
+    });
+  }
+
+  private saveDataToLocalStorage() {
+    this.localStorageService.setNewsData({
+      countryCode: this.proposedCountryCode,
     });
   }
 }
