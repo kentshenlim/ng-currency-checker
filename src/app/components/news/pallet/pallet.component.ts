@@ -23,7 +23,7 @@ import { TimeAgoPipe } from '../../../pipes/time-ago.pipe';
       <img
         [src]="news.imageUrl"
         alt="Image for news pallet"
-        class="mb-5 w-full max-w-lg mx-auto md:rounded-xl md:mb-8"
+        class="mb-5 w-full max-w-md mx-auto md:rounded-xl md:mb-8"
       />
       }
       <h3 class="line-clamp-[8] md:text-xl">{{ news.description }}</h3>

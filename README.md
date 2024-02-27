@@ -1,5 +1,23 @@
-# ng-currency-checker
+# Currency Master
 
-Angular, [Freecurrency API](https://freecurrencyapi.com/), AG grid,
-[Country Flags API](https://flagsapi.com/),
-[marketaux](https://www.marketaux.com/).
+Currency calculator, currency trend, and financial news, all in one place.
+Demo [here]().
+
+<p align="center">
+    <img src="./currency-master.png" alt="Icon" width="175">
+</p>
+
+## Project Overview
+
+- Project written to practice Angular
+- Not fully responsive
+- API keys not hidden; all APIs are free please create your own account thanks
+
+## Tools
+
+- Angular
+- Tailwind
+- [AG Charts](https://charts.ag-grid.com)
+- APIs: [Freecurrency API](https://freecurrencyapi.com/),
+  [marketaux](https://www.marketaux.com/), [Country Flags
+  API](https://flagsapi.com/)
