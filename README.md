@@ -11,7 +11,7 @@ Demo [here]().
 
 - Project written to practice Angular
 - Not fully responsive
-- API keys not hidden; all APIs are free please create your own account thanks
+- API keys not hidden; all APIs are free
 
 ## Tools
 
