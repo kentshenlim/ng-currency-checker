@@ -1,7 +1,7 @@
 # Currency Master
 
 Currency calculator, currency trend, and financial news, all in one place.
-Demo [here]().
+Demo [here](https://ng-currency-checker-kentshenlim.vercel.app/).
 
 <p align="center">
     <img src="./currency-master.png" alt="Icon" width="175">
