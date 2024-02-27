@@ -6,6 +6,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { HistoryDateService } from './history-date.service';
 import { Subject } from 'rxjs';
 import { HistoryEmit } from '../interfaces/history-emit';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,10 +29,20 @@ export class HistoryService {
 
   constructor(
     private historyDateService: HistoryDateService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private localStorageService: LocalStorageService
   ) {
-    this.dateStrings = this.historyDateService.getDateStrings(this.isMonthly);
     this.historyPoints = [];
+    const dataInit = this.localStorageService.getHistoryData();
+    if (dataInit) {
+      this.baseCurrency = dataInit.baseCurrency;
+      this.targetCurrency = dataInit.targetCurrency;
+      this.isMonthly = dataInit.isMonthly;
+      this.historyPoints = dataInit.historyPoints;
+    }
+    this.dateStrings = this.historyDateService.getDateStrings(this.isMonthly);
+    // dateStrings might be out-of-sync with historyPoints but nvm
+    // Date in historyPoints will be consistent with the values
   }
 
   getBaseCurrency() {
@@ -110,6 +121,16 @@ export class HistoryService {
 
   private emitCurrentData() {
     this.historyDataSubject.next({
+      baseCurrency: this.baseCurrency,
+      targetCurrency: this.targetCurrency,
+      isMonthly: this.isMonthly,
+      historyPoints: this.historyPoints,
+    });
+    this.saveDataToLocalStorage();
+  }
+
+  private saveDataToLocalStorage() {
+    this.localStorageService.setHistoryData({
       baseCurrency: this.baseCurrency,
       targetCurrency: this.targetCurrency,
       isMonthly: this.isMonthly,
