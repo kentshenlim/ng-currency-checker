@@ -86,7 +86,6 @@ export class ConverterService {
 
   private updateConversionRateAndEmitData() {
     // Don't call this directly, call debounced version
-    console.log('expensive');
     const baseUrl = 'https://api.freecurrencyapi.com/v1/latest';
     let httpParams = new HttpParams();
     httpParams = httpParams.append('apikey', this.API_KEY);

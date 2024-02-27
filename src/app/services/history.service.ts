@@ -92,7 +92,6 @@ export class HistoryService {
 
   private fetchHistoryPoint(dateString: string, idx: number) {
     // Don't call this directly
-    console.log('Very expensive');
     const baseUrl = 'https://api.freecurrencyapi.com/v1/historical';
     let httpParams = new HttpParams();
     httpParams = httpParams.append('apikey', this.API_KEY);
