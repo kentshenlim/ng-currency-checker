@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import debounce from '../utils/debounce';
 import { ConverterEmit } from '../interfaces/converter-emit';
 import constants from '../constants';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,17 @@ export class ConverterService {
     this.DEBOUNCE_TIME_MS
   );
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private localStorageService: LocalStorageService
+  ) {
+    const dataInit = this.localStorageService.getConverterData();
+    if (!dataInit) return;
+    this.baseCurrency = dataInit.baseCurrency;
+    this.targetCurrency = dataInit.targetCurrency;
+    this.baseAmount = dataInit.baseAmount;
+    this.conversionRate = dataInit.conversionRate;
+  }
 
   getBaseCurrency() {
     return this.baseCurrency;
@@ -97,6 +108,17 @@ export class ConverterService {
       targetCurrency: this.targetCurrency,
       conversionRate: this.conversionRate,
       baseAmount: this.baseAmount,
+      convertedAmount: this.getConvertedAmount(),
+    });
+    this.saveDataToLocalStorage(); // Always happen with emission
+  }
+
+  private saveDataToLocalStorage() {
+    this.localStorageService.setConverterData({
+      baseCurrency: this.baseCurrency,
+      targetCurrency: this.targetCurrency,
+      baseAmount: this.baseAmount,
+      conversionRate: this.conversionRate,
       convertedAmount: this.getConvertedAmount(),
     });
   }
