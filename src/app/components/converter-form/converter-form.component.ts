@@ -17,11 +17,11 @@ import { Subscription } from 'rxjs';
       <div class="w-full mx-auto relative my-6 border border-MAIN">
         <button
           (click)="onClickSwap()"
-          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 md:w-14 aspect-square rounded-full bg-sky-200/60 flex items-center justify-center"
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 md:w-14 aspect-square rounded-full bg-sky-200/60 flex items-center justify-center text-ACCENT"
         >
           <ion-icon
             name="swap-vertical-outline"
-            class="text-lg md:text-2xl text-ACCENT"
+            class="button-ion-icon"
           ></ion-icon>
         </button>
       </div>

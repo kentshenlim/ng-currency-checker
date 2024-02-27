@@ -25,6 +25,11 @@ body {
     @apply px-3 py-2 mb-6 rounded-lg bg-CANVA;
     @apply md:px-8 md:py-6 md:rounded-2xl;
   }
+
+  .button-ion-icon {
+    @apply text-lg;
+    @apply md:text-2xl;
+  }
 }
 
 @layer utilities {

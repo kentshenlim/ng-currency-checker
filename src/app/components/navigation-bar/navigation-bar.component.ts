@@ -9,7 +9,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <nav
-      class="flex justify-between [&>a]:flex-grow [&>a]:text-center text-ACCENT [&_ion-icon]:text-lg bg-sky-200 [&>a]:navbar-centering [&>a]:pt-2"
+      class="flex justify-between [&>a]:flex-grow [&>a]:text-center text-ACCENT [&_ion-icon]:button-ion-icon bg-sky-200 [&>a]:navbar-centering [&>a]:pt-2 md:rounded-t-lg overflow-hidden"
     >
       <a
         routerLink="/"
@@ -17,7 +17,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <ion-icon name="swap-horizontal-sharp"></ion-icon>
-        <p>Convert</p>
+        <p class="md:mt-1 md:text-xl">Convert</p>
       </a>
       <a
         routerLink="/trend"
@@ -25,7 +25,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <ion-icon name="trending-up-sharp"></ion-icon>
-        <p>Trend</p>
+        <p class="md:mt-1 md:text-xl">Trend</p>
       </a>
       <a
         routerLink="/news"
@@ -33,7 +33,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <ion-icon name="newspaper-sharp"></ion-icon>
-        <p>News</p>
+        <p class="md:mt-1 md:text-xl">News</p>
       </a>
     </nav>
   `,
