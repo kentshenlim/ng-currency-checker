@@ -4,6 +4,8 @@
 
 body {
   @apply bg-MAIN;
+  position: relative;
+  overflow: hidden;
 }
 
 @layer components {

@@ -13,6 +13,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { ScrollUpButtonComponent } from './components/_common-ui/scroll-up-button/scroll-up-button.component';
 import { ScrollingService } from './services/scrolling.service';
 import { Subscription } from 'rxjs';
+import { DecorativeBackgroundComponent } from './components/decorative-background/decorative-background.component';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ import { Subscription } from 'rxjs';
     HeaderComponent,
     NavigationBarComponent,
     ScrollUpButtonComponent,
+    DecorativeBackgroundComponent,
   ],
   template: `
     <div class="w-screen h-screen flex flex-col bg-MAIN max-w-3xl mx-auto">
@@ -42,6 +44,7 @@ import { Subscription } from 'rxjs';
         <app-navigation-bar />
       </section>
     </div>
+    <app-decorative-background />
   `,
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
