@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class ScrollingService {
-  private scrollSubject = new Subject<void>();
+  private scrollSubject = new Subject<'top' | 'bottom'>();
 
   constructor() {}
 
@@ -14,6 +14,10 @@ export class ScrollingService {
   }
 
   scrollToBottom() {
-    this.scrollSubject.next();
+    this.scrollSubject.next('bottom');
+  }
+
+  scrollToTop() {
+    this.scrollSubject.next('top');
   }
 }
