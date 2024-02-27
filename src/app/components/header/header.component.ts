@@ -5,10 +5,10 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <h1 class="font-bold text-2xl mb-2 text-center text-ACCENT">
+    <h1 class="font-bold text-2xl mb-2 text-center text-ACCENT md:text-3xl">
       {{ titleText }}
     </h1>
-    <p class="text-center text-sm">
+    <p class="text-center text-sm md:text-lg">
       {{ description }}
     </p>
   `,

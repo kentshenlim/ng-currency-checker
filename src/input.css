@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-MAIN;
+}
+
 @layer components {
   .form-input-element {
     @apply border-2 rounded-md outline-none border-sky-100/60 bg-sky-100/60;
@@ -19,6 +23,7 @@
 
   .canva {
     @apply px-3 py-2 mb-6 rounded-lg bg-CANVA;
+    @apply md:px-8 md:py-6 md:rounded-2xl;
   }
 }
 

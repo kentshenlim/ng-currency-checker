@@ -17,19 +17,21 @@ import { Subscription } from 'rxjs';
       <div class="w-full mx-auto relative my-6 border border-MAIN">
         <button
           (click)="onClickSwap()"
-          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 aspect-square rounded-full bg-sky-200/60 flex items-center justify-center"
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 md:w-14 aspect-square rounded-full bg-sky-200/60 flex items-center justify-center"
         >
           <ion-icon
             name="swap-vertical-outline"
-            class="text-lg text-ACCENT"
+            class="text-lg md:text-2xl text-ACCENT"
           ></ion-icon>
         </button>
       </div>
       <app-converter-form-panel [isBase]="false" />
     </div>
-    <div>
-      <div class="text-sm mb-2">Indicative Exchange Rate</div>
-      <p class="text-sm font-medium">
+    <div class="md:px-5">
+      <div class="text-sm sm:text-base md:text-xl mb-2">
+        Indicative Exchange Rate
+      </div>
+      <p class="text-sm sm:text-base md:text-xl font-medium">
         1 <span> {{ getBaseCurrencyName() }}</span> =
         <span>{{ conversionRate | number : '1.0-4' }}</span
         >&nbsp;

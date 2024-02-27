@@ -16,7 +16,11 @@ import { Subscription } from 'rxjs';
   imports: [CurrencySelectorComponent],
   template: `
     <form>
-      <h3 class="text-sm font-medium mb-3 text-ACCENT">{{ headerText }}</h3>
+      <h3
+        class="text-sm sm:text-base md:text-xl font-medium mb-3 text-ACCENT md:mb-6"
+      >
+        {{ headerText }}
+      </h3>
       <div class="flex [&>div]:flex-grow [&>div]:w-1 gap-4">
         <app-currency-selector
           [isBase]="isBase"
@@ -32,7 +36,7 @@ import { Subscription } from 'rxjs';
             (keyup)="onChangeAmount()"
             [disabled]="!isAmountMutable"
             #amountSelected
-            class="text-right w-[80%] px-2 form-input-element"
+            class="text-right w-[80%] max-w-72 px-2 form-input-element md:text-xl"
           />
         </div>
       </div>

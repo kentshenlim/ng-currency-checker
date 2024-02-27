@@ -14,9 +14,9 @@ import { CurrenciesService } from '../../../services/currencies.service';
   standalone: true,
   imports: [],
   template: `
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 md:gap-6 md:px-4">
       <div
-        class="w-10 rounded-full aspect-square overflow-hidden overflow border bg-center"
+        class="w-10 rounded-full aspect-square overflow-hidden overflow border bg-center md:scale-150"
         [style.backgroundImage]="'url(' + getFlagUrl() + ')'"
       ></div>
       <select
@@ -24,7 +24,7 @@ import { CurrenciesService } from '../../../services/currencies.service';
         [id]="idPrefix + 'Currency'"
         (change)="onChangeCurrency()"
         #currencySelected
-        class="form-input-element"
+        class="form-input-element md:text-xl"
       >
         @for (code of codeArray; track code) {
         <option [value]="code" [selected]="selectedCode === code">

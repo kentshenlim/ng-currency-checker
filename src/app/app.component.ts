@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
     ScrollUpButtonComponent,
   ],
   template: `
-    <div class="w-screen h-screen flex flex-col bg-MAIN">
+    <div class="w-screen h-screen flex flex-col bg-MAIN max-w-3xl mx-auto">
       <section class="px-3 bg-sky-200/30 pt-3 pb-2">
         <app-header />
       </section>
