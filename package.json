@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build & npx tailwindcss -i src/input.css -o src/output.css --minify",
+    "build": "npx tailwindcss -i src/input.css -o src/output.css --minify && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "style": "npx tailwindcss -i src/input.css -o src/output.css --watch"
