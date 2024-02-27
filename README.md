@@ -12,6 +12,8 @@ Demo [here](https://ng-currency-checker-kentshenlim.vercel.app/).
 - Project written to practice Angular
 - Not fully responsive
 - API keys not hidden; all APIs are free
+- If request fails most likely because API request limits have been exceeded. If
+  you believe this is not the case feel free to raise an issue.
 
 ## Tools
 
